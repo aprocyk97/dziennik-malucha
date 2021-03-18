@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/dziennik-malucha/static/css/main.8c8b27cf.chunk.css",
+    "main.js": "/dziennik-malucha/static/js/main.db1c5a57.chunk.js",
+    "main.js.map": "/dziennik-malucha/static/js/main.db1c5a57.chunk.js.map",
+    "runtime-main.js": "/dziennik-malucha/static/js/runtime-main.9d6634fb.js",
+    "runtime-main.js.map": "/dziennik-malucha/static/js/runtime-main.9d6634fb.js.map",
+    "static/js/2.c2a98727.chunk.js": "/dziennik-malucha/static/js/2.c2a98727.chunk.js",
+    "static/js/2.c2a98727.chunk.js.map": "/dziennik-malucha/static/js/2.c2a98727.chunk.js.map",
+    "static/js/3.aec65f38.chunk.js": "/dziennik-malucha/static/js/3.aec65f38.chunk.js",
+    "static/js/3.aec65f38.chunk.js.map": "/dziennik-malucha/static/js/3.aec65f38.chunk.js.map",
+    "index.html": "/dziennik-malucha/index.html",
+    "static/css/main.8c8b27cf.chunk.css.map": "/dziennik-malucha/static/css/main.8c8b27cf.chunk.css.map",
+    "static/js/2.c2a98727.chunk.js.LICENSE.txt": "/dziennik-malucha/static/js/2.c2a98727.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/dziennik-malucha/static/media/logo.6ce24c58.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9d6634fb.js",
+    "static/js/2.c2a98727.chunk.js",
+    "static/css/main.8c8b27cf.chunk.css",
+    "static/js/main.db1c5a57.chunk.js"
+  ]
+}
