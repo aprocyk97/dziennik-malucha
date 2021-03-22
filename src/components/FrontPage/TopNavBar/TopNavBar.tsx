@@ -1,5 +1,11 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
 
 import { Colors } from '../../../styledHelpers/Colors';
 import { fontSize } from '../../../styledHelpers/FontSizes';
@@ -20,7 +26,7 @@ const ButtonWrapper = styled.div`
 
 `;
 
-const Button = styled.div`
+const Button = styled(Link)`
 
     height: auto;
     width: 10%;
@@ -30,6 +36,7 @@ const Button = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    text-decoration: none;
     
 
     font-size: ${fontSize[20]};
@@ -49,9 +56,11 @@ const NavBarWrapper = styled.div`
 `;
 
 const Logo = styled.img`
+    width: 100%;
     max-width: 100%;
     height: auto;
     margin: 0;
+    
 `;
 
 
@@ -62,11 +71,13 @@ export const TopNavBar: FC = () => {
         <NavBarWrapper>
             <Logo src={banner}/>
             <ButtonWrapper>
-                <Button>Strona Główna</Button>
-                <Button>Cennik</Button>
-                <Button>O nas</Button>
-                <Button>Kontakt</Button>
-                <Button>Logowanie</Button>
+                
+                    <Button to="/">Strona Główna</Button>
+                    <Button to ="/cennik">Cennik</Button>
+                    <Button>O nas</Button>
+                    <Button>Kontakt</Button>
+                    <Button>Logowanie</Button>
+                
             </ButtonWrapper>
         </NavBarWrapper>
         
