@@ -10,6 +10,9 @@ import {
 import { TopNavBar } from './TopNavBar/TopNavBar';
 import { MainPage } from './MainPage/MainPage';
 import { CennikPage } from './CennikPage/CennikPage'
+import {LoginPage} from './LoginPage/LoginPage'
+
+
 
 const Wrapper = styled.div`
 
@@ -30,6 +33,9 @@ export const FrontPage: FC = () => {
                         </Route>
                         <Route path="/cennik">
                             <CennikPage />
+                        </Route>
+                        <Route path="/login">
+                            <LoginPage />
                         </Route>
                     </Switch>
                 </Wrapper>

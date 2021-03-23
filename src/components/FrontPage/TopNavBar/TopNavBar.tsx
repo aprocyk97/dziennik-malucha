@@ -76,7 +76,7 @@ export const TopNavBar: FC = () => {
                     <Button to ="/cennik">Cennik</Button>
                     <Button>O nas</Button>
                     <Button>Kontakt</Button>
-                    <Button>Logowanie</Button>
+                    <Button to="/login">Logowanie</Button>
                 
             </ButtonWrapper>
         </NavBarWrapper>
