@@ -11,6 +11,9 @@ import { TopNavBar } from './TopNavBar/TopNavBar';
 import { MainPage } from './MainPage/MainPage';
 import { CennikPage } from './CennikPage/CennikPage'
 import {LoginPage} from './LoginPage/LoginPage'
+import { RegisterPage } from './RegisterPage/RegisterPage';
+import { UserProfile } from './UserProfile/UserProfile';
+import {PrivateRoute} from '../../tools/PrivateRoute';
 
 
 
@@ -37,6 +40,10 @@ export const FrontPage: FC = () => {
                         <Route path="/login">
                             <LoginPage />
                         </Route>
+                        <Route path="/register">
+                            <RegisterPage />
+                        </Route>
+                        <PrivateRoute path="/profile" component={UserProfile} />
                     </Switch>
                 </Wrapper>
             </Router>

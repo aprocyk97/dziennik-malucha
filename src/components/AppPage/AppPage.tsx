@@ -3,18 +3,22 @@ import styled from 'styled-components';
 
 
 import { FrontPage } from '../FrontPage/FrontPage';
+import {AuthProvider} from '../../context/AuthContext'
 
 
 const Wrapper = styled.div`
-
+    overflow-x: hidden;
 `;
 
 export const AppPage: FC = () => {
 
     return(
-        <Wrapper>
-            <FrontPage />
-        </Wrapper>
+        <AuthProvider>
+            <Wrapper>
+                <FrontPage />
+            </Wrapper>
+
+        </AuthProvider>
     );
 
 };

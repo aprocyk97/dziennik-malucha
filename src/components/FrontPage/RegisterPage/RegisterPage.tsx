@@ -1,17 +1,12 @@
 import React, {FC, useRef, useState} from 'react'
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 import {useAuth} from '../../../context/AuthContext';
 
-import { Colors } from '../../../styledHelpers/Colors'
-import { fontSize } from '../../../styledHelpers/FontSizes'
+import { Colors } from '../../../styledHelpers/Colors';
+import { fontSize } from '../../../styledHelpers/FontSizes';
 
-const PageWrapper = styled.div`
-    
-    background-color: #F7FAF7;
-    
-`;
 
 const Wrapper = styled.div`
     border: 3px solid ${Colors.borderGreen};
@@ -20,6 +15,10 @@ const Wrapper = styled.div`
     width:33.3vw;
     min-width: 300px;
     background-color: #FFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
     
 `;
 const Form = styled.form`
@@ -29,7 +28,7 @@ const Form = styled.form`
     flex-direction: column;
     
     align-items: center;
-    margin: 1vh 0 5vh;
+    margin: 1vh 0 1vh;
 `;
 const LoginInput = styled.input`
     
@@ -45,6 +44,7 @@ const LoginInputLabel = styled.label`
     display: flex;
     flex-direction: column;
     margin: 2vh 0;
+    
 
     font-size: ${fontSize[22]};
 `;
@@ -65,30 +65,34 @@ const LoginButton = styled.button`
     font-size:${fontSize[20]};
 `;
 
-
-
-export const LoginPage:FC = () => {
+export const RegisterPage:FC = () => {
 
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
     const emailRef = useRef<HTMLInputElement>();
     const passwordRef = useRef<HTMLInputElement>();
+    const confirmPasswordRef = useRef<HTMLInputElement>();
     const history = useHistory();
-    const {login} = useAuth();
+
+    const  {signup, currentUser}  = useAuth();
 
     async function handleSubmit(e){
         e.preventDefault();
 
+        if (passwordRef.current?.value !== confirmPasswordRef.current?.value){
+            return setError('Hasła się nie zgadzają');
+        }
+
         try{
             setError('');
             setLoading(true);
-            await login(emailRef.current?.value, passwordRef.current?.value);
-            history.push('/profile');
+            await signup(emailRef.current?.value, passwordRef.current?.value);
         }catch{
-            setError('Pojawił się błąd podczas logowania');    
+            setError('Pojawił się problem z utworzeniem konta')
         }
         setLoading(false);
+
         
     }
     
@@ -96,22 +100,34 @@ export const LoginPage:FC = () => {
     return (
 
         <Wrapper>
+
             {error && <div>{error}</div>}
-            <LoginText>Logowanie</LoginText>
+            {currentUser && currentUser.email}
+            <LoginText>Rejestracja</LoginText>
+
             <Form onSubmit={handleSubmit}>
                 <LoginInputLabel>
                     Email
                     <LoginInput type="email" ref={emailRef} required />
                 </LoginInputLabel>
+
                 <LoginInputLabel>
                     Hasło
                     <LoginInput type="password" ref={passwordRef} required />
                 </LoginInputLabel>
-                <LoginButton disabled={loading} type="submit">Zaloguj</LoginButton>
+
+                <LoginInputLabel>
+                    Powtórz hasło
+                    <LoginInput type="password" ref={confirmPasswordRef} required />
+                </LoginInputLabel>
+
+                <LoginButton disabled={loading} type="submit">Zarejestruj</LoginButton>
             </Form>
-            <div>Zapomniałeś hasła? <Link to="/forgot-password">Kliknij</Link></div>
-            <div>Nie masz konta? <Link to="/register">Zarejestruj się</Link></div>
+
+            <div>Masz już konto? <Link to="/login">Zaloguj się</Link></div>
         </Wrapper>
 
     )
 }
+
+
