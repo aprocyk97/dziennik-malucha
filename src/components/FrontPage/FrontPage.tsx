@@ -14,6 +14,7 @@ import {LoginPage} from './LoginPage/LoginPage'
 import { RegisterPage } from './RegisterPage/RegisterPage';
 import { UserProfile } from './UserProfile/UserProfile';
 import {PrivateRoute} from '../../tools/PrivateRoute';
+import { ForgotPasswordPage } from './ForgotPasswordPage/ForgotPasswordPage';
 
 
 
@@ -31,19 +32,29 @@ export const FrontPage: FC = () => {
                     <TopNavBar />
                     
                     <Switch>
+
                         <Route exact path="/">
                             <MainPage />
                         </Route>
+
                         <Route path="/cennik">
                             <CennikPage />
                         </Route>
+
                         <Route path="/login">
                             <LoginPage />
                         </Route>
+
                         <Route path="/register">
                             <RegisterPage />
                         </Route>
+
                         <PrivateRoute path="/profile" component={UserProfile} />
+                        
+                        <Route path="/forgot-password">
+                            <ForgotPasswordPage />
+                        </Route>
+
                     </Switch>
                 </Wrapper>
             </Router>
