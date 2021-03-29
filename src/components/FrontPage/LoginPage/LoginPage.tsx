@@ -1,6 +1,9 @@
 import React, {FC, useRef, useState} from 'react'
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import {useAuth} from '../../../context/AuthContext';
 
@@ -11,13 +14,16 @@ import
     LoginInput, 
     LoginInputLabel, 
     LoginText, 
-    LoginButton
+    LoginButton,
+    AdditionalLinks,
+    ErrorWrapper
 } from '../../../styledHelpers/LoginFormStyling';
 
 
 
 export const LoginPage:FC = () => {
 
+    
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -25,6 +31,8 @@ export const LoginPage:FC = () => {
     const passwordRef = useRef<HTMLInputElement>();
     const history = useHistory();
     const {login, getUser} = useAuth();
+
+    library.add(fas);
 
     async function handleSubmit(e){
         e.preventDefault();
@@ -47,9 +55,14 @@ export const LoginPage:FC = () => {
     
 
     return (
-
+        
+        <div>
+            {error && <ErrorWrapper>
+                <FontAwesomeIcon icon="exclamation-circle" size="lg"/>  
+                <p>{error}</p>
+                </ErrorWrapper>}
         <Wrapper>
-            {error && <div>{error}</div>}
+            
 
             <LoginText>Logowanie</LoginText>
 
@@ -85,12 +98,12 @@ export const LoginPage:FC = () => {
                 </LoginButton>
                 
             </Form>
-            <div>
-                Zapomniałeś hasła? <Link to="/forgot-password">Kliknij</Link>
-
-                Nie masz konta? <Link to="/register">Zarejestruj się</Link>
-            </div>
+            <AdditionalLinks>
+                <p>Zapomniałeś hasła? <Link to="/forgot-password">Kliknij</Link></p>
+                <p>Nie masz konta? <Link to="/register">Zarejestruj się</Link></p>
+            </AdditionalLinks>
         </Wrapper>
+        </div>
 
     )
 }

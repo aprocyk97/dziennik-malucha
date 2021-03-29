@@ -4,8 +4,12 @@ import {fontSize} from './FontSizes';
 
 export const Wrapper = styled.div`
 
-    border: 3px solid ${Colors.borderGreen};
+    /* border: 1px solid ${Colors.borderGreen}; */
     border-radius: 25px;
+
+    box-shadow:0px 0px 40px ${Colors.borderGreen};
+
+    
 
     margin: 15vh 35vw;
     width:25vw;
@@ -51,12 +55,13 @@ export const LoginInputLabel = styled.label`
 
     font-size: ${fontSize[22]};
 
+    
 `;
 
 export const LoginText = styled.div`
 
     font-size: ${fontSize[24]};
-    color: #3f643f;
+    color: #000;
     text-align: center;
     font-weight: bold;
 
@@ -69,10 +74,59 @@ export const LoginButton = styled.button`
     width: 14vw;
     height: 4vh;
 
-    border: 2px solid;
+    box-shadow:10px 10px 30px ${Colors.borderGreen} inset;
+
+    /* border: 2px solid; */
     border-radius: 5px;
     
     font-weight: bold;
     font-size:${fontSize[20]};
 
+    &:hover{
+        cursor: pointer;
+    }
+    
+    &:active{
+        border-style: outset !important;
+        
+    }
+    &:focus{
+        border-style: outset;
+        
+    }
+
+`;
+export const AdditionalLinks = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    p{
+        &:first-child{
+            margin: 10px 0 4px 0;
+        }
+        &:last-child{
+            margin: 4px 0 20px 0;
+        }
+
+    }
+`;
+export const ErrorWrapper = styled.div`
+
+    width:20vw;
+    margin: 5vh 36vw -5vh;
+
+    display:flex;
+    flex-direction: row;
+    
+
+    border-radius: 25px;
+    background-color: ${Colors.errorRed};
+    box-shadow:0 0 10px ${Colors.errorRed};
+    color: #fff;
+
+    padding: 25px;
+    p{
+        margin-left: 25px;
+        
+    }
 `;

@@ -11,8 +11,11 @@ import
     LoginInput, 
     LoginInputLabel, 
     LoginText, 
-    LoginButton
+    LoginButton,
+    AdditionalLinks,
+    ErrorWrapper
 } from '../../../styledHelpers/LoginFormStyling';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 
@@ -57,11 +60,16 @@ export const RegisterPage:FC = () => {
     
 
     return (
-
+        <div>
+            {error && 
+                <ErrorWrapper>
+                    <FontAwesomeIcon icon="exclamation-circle"/>
+                    <p>{error}</p>
+                </ErrorWrapper>
+            }
         <Wrapper>
 
-            {error && <div>{error}</div>}
-            {currentUser && currentUser.email}
+            
             <LoginText>Rejestracja</LoginText>
 
             <Form onSubmit={handleSubmit}>
@@ -115,12 +123,11 @@ export const RegisterPage:FC = () => {
                 </LoginButton>
             </Form>
 
-            <div>
-                Masz już konto? 
-                <Link to="/login">Zaloguj się</Link>
-            </div>
+            <AdditionalLinks>
+                <p>Masz już konto? <Link to="/login">Zaloguj się</Link></p>
+            </AdditionalLinks>
         </Wrapper>
-
+        </div>
     )
 }
 

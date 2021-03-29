@@ -1,7 +1,36 @@
-import React, {FC, useState, useEffect} from 'react'
-import {useAuth} from '../../../context/AuthContext'
+import React, {FC, useState, useEffect} from 'react';
+import {useAuth} from '../../../context/AuthContext';
+import styled from 'styled-components';
 import {Link, useHistory} from 'react-router-dom';
 import {db} from '../../../firebase'; 
+
+import {Colors} from '../../../styledHelpers/Colors';
+import {fontSize} from '../../../styledHelpers/FontSizes';
+import 
+{
+    Wrapper, 
+    LoginButton
+
+} from '../../../styledHelpers/LoginFormStyling';
+
+
+const Wrap = styled(Wrapper)`
+    flex-direction: row;
+`;
+
+const ColumnWrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    font-size: ${fontSize[22]};
+
+
+    margin: 25px;
+    padding-right: 10px;
+
+    &:first-child{
+        border-right: 1px solid black;
+    }
+`;
 
 export const UserProfile:FC = () => {
 
@@ -10,7 +39,7 @@ export const UserProfile:FC = () => {
     const [loading, setLoading] = useState<Boolean>(true);
     
 
-    const {currentUser, logout, getUser} = useAuth();
+    const {logout, getUser} = useAuth();
     const history = useHistory();
     const userRef = db.collection('users').doc(getUser());
 
@@ -27,26 +56,7 @@ export const UserProfile:FC = () => {
                 setError('Błąd podczas pobierania danych z serwera')
             });
         };
-        // const sort = async () => {
-        //     console.log('datafetched:' + data);
-        //     if(data !== undefined){
-        //         let arr: any[] = [];
-        //         Object.entries(data).map(([key, value]) => {
-        //             arr.push([key,value]);
-        //         })
-        //         arr.sort((a,b)=>{
-        //             if (a[0] === b[0]) {
-        //                 return 0;
-        //             }
-        //             else {
-        //                 return (a[0] < b[0]) ? -1 : 1;
-        //             }
-        //         })
-        //         setSortedData(arr);
-        //     }
-        // };
         fetchData();
-        // sort();
         
         
     }, []);
@@ -68,8 +78,7 @@ export const UserProfile:FC = () => {
     }
 
     function kek(){
-        if(sortedData !== undefined){
-            
+        if(sortedData !== undefined){      
             return(
                 <ul>
                     {sortedData.map( obj => {
@@ -93,13 +102,18 @@ export const UserProfile:FC = () => {
     }
 
     return (
-        <div>
-            {error && <div>{error}</div>}
-            {/* Profil Użytkownika: {JSON.stringify(data)} */}
-            {loading ? <div>Loading</div> : kek() }
-            
-            <button onClick={handleLogout}>Wyloguj</button>
+        <Wrap>
+            <ColumnWrap>
+                {error && <div>{error}</div>}
+                {/* Profil Użytkownika: {JSON.stringify(data)} */}
+                {loading ? <div>Loading</div> : kek() }
+                
+                <button onClick={handleLogout}>Wyloguj</button>
+            </ColumnWrap>
 
-        </div>
+            <ColumnWrap>
+            
+            </ColumnWrap>
+        </Wrap>
     )
 }

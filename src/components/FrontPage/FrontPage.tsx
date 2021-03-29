@@ -13,8 +13,10 @@ import { CennikPage } from './CennikPage/CennikPage'
 import {LoginPage} from './LoginPage/LoginPage'
 import { RegisterPage } from './RegisterPage/RegisterPage';
 import { UserProfile } from './UserProfile/UserProfile';
-import {PrivateRoute} from '../../tools/PrivateRoute';
 import { ForgotPasswordPage } from './ForgotPasswordPage/ForgotPasswordPage';
+
+import {PrivateRoute} from '../../tools/PrivateRoute';
+import {LoggedRoute} from '../../tools/LoggedRoute';
 
 
 
@@ -41,15 +43,20 @@ export const FrontPage: FC = () => {
                             <CennikPage />
                         </Route>
 
-                        <Route path="/login">
-                            <LoginPage />
-                        </Route>
+                        <LoggedRoute 
+                            path="/login" 
+                            component={LoginPage} 
+                        />
 
-                        <Route path="/register">
-                            <RegisterPage />
-                        </Route>
+                        <LoggedRoute 
+                            path="/register" 
+                            component={RegisterPage} 
+                        />
 
-                        <PrivateRoute path="/profile" component={UserProfile} />
+                        <PrivateRoute 
+                            path="/profile" 
+                            component={UserProfile} 
+                        />
                         
                         <Route path="/forgot-password">
                             <ForgotPasswordPage />
