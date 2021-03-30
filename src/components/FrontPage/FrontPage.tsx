@@ -15,6 +15,15 @@ import { PricePage } from './PricePage/PricePage';
 import { AboutPage } from './AboutPage/AboutPage';
 import { ContactPage } from './ContactPage/ContactPage';
 import {RightNavBar} from '../AppPage/RightNavBar/RightNavBar';
+import {LoginPage} from './LoginPage/LoginPage'
+import { RegisterPage } from './RegisterPage/RegisterPage';
+import { UserProfile } from './UserProfile/UserProfile';
+import { ForgotPasswordPage } from './ForgotPasswordPage/ForgotPasswordPage';
+
+import {PrivateRoute} from '../../tools/PrivateRoute';
+import {LoggedRoute} from '../../tools/LoggedRoute';
+
+
 
 const Wrapper = styled.div`
     height: 100%;
@@ -29,6 +38,7 @@ export const FrontPage: FC = () => {
                 <Wrapper>
                     <TopNavBar />
                     <Switch>
+
                         <Route exact path="/">
                             <MainPage />
                         </Route>
@@ -44,6 +54,26 @@ export const FrontPage: FC = () => {
                         <Route path="/aaa">
                             <RightNavBar />
                         </Route>
+
+                        <LoggedRoute 
+                            path="/login" 
+                            component={LoginPage} 
+                        />
+
+                        <Route 
+                            path="/register" 
+                            component={RegisterPage} 
+                        />
+
+                        <PrivateRoute 
+                            path="/profile" 
+                            component={UserProfile} 
+                        />
+                        
+                        <Route path="/forgot-password">
+                            <ForgotPasswordPage />
+                        </Route>
+
                     </Switch>
                 </Wrapper>
             </Router>
