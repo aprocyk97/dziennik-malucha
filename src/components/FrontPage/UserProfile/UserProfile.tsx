@@ -16,20 +16,42 @@ import
 
 const Wrap = styled(Wrapper)`
     flex-direction: row;
+    align-items: normal;
+
+    margin: 15vh 20vw;
+    width:60vw;
 `;
 
 const ColumnWrap = styled.div`
-    display: flex;
-    flex-direction: column;
-    font-size: ${fontSize[22]};
 
+    width: 50%;
 
     margin: 25px;
     padding-right: 10px;
 
+    display: flex;
+    flex-direction: column;
+
+
+    font-size: ${fontSize[22]};
+
     &:first-child{
         border-right: 1px solid black;
     }
+
+    h1{
+        margin-bottom: 25px;
+    }
+    li{
+        margin-bottom: 10px;
+    }
+`;
+const StyledListElement = styled.li`
+    border: 1px solid gray;
+    border-radius: 5px;
+
+    padding: 10px;
+    margin: 0 0 10px 10px;
 `;
 
 export const UserProfile:FC = () => {
@@ -37,6 +59,7 @@ export const UserProfile:FC = () => {
     const [error, setError] = useState('');
     const [sortedData, setSortedData] = useState<Array<any>>();
     const [loading, setLoading] = useState<Boolean>(true);
+    const [kindergardens, setKindergardens] = useState<Array<any>>();
     
 
     const {logout, getUser} = useAuth();
@@ -63,10 +86,11 @@ export const UserProfile:FC = () => {
 
     function sortData(obj: object | undefined){
         let arr: any[] = [];
+        
         Object.entries(obj!).map(([key, value]) => {
-            arr.push([key,value]);
+            key !== 'kindergardens'?  arr.push([key,value]): setKindergardens(value);
         })
-        arr.sort((a,b)=>{
+        arr.sort((a,b) => {
             if (a[0] === b[0]) {
                 return 0;
             }
@@ -77,7 +101,7 @@ export const UserProfile:FC = () => {
         setSortedData(arr);
     }
 
-    function kek(){
+    function displayUserData(){
         if(sortedData !== undefined){      
             return(
                 <ul>
@@ -106,12 +130,20 @@ export const UserProfile:FC = () => {
             <ColumnWrap>
                 {error && <div>{error}</div>}
                 {/* Profil Użytkownika: {JSON.stringify(data)} */}
-                {loading ? <div>Loading</div> : kek() }
+                <h1>Dane Użytkownika</h1>
+                {loading ? <div>Loading</div> : displayUserData() }
                 
                 <button onClick={handleLogout}>Wyloguj</button>
             </ColumnWrap>
 
             <ColumnWrap>
+            <h1>Twoje przedszkola</h1>
+            <ul>
+                {kindergardens && kindergardens.map(value => {
+                    return <StyledListElement><Link to={value?.id} >{value.name}</Link></StyledListElement>
+                })}
+
+            </ul>
             
             </ColumnWrap>
         </Wrap>

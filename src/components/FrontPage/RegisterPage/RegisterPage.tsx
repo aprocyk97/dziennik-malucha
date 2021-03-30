@@ -43,12 +43,15 @@ export const RegisterPage:FC = () => {
         try{
             setError('');
             setLoading(true);
+
             await signup(emailRef.current?.value, passwordRef.current?.value);
             await db.collection('users').doc(getUser()).set({
                 name: nameRef.current?.value,
                 surname: surnameRef.current?.value,
                 email: emailRef.current?.value
             });
+
+            await history.push('/profile');
 
         }catch{
             setError('Pojawił się problem z utworzeniem konta')

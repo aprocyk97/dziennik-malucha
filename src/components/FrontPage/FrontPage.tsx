@@ -48,7 +48,7 @@ export const FrontPage: FC = () => {
                             component={LoginPage} 
                         />
 
-                        <LoggedRoute 
+                        <Route 
                             path="/register" 
                             component={RegisterPage} 
                         />
