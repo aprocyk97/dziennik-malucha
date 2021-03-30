@@ -9,15 +9,12 @@ import {
 
 import { Colors } from '../../../styledHelpers/Colors';
 import { fontSize } from '../../../styledHelpers/FontSizes';
-import  banner from '../../../media/banner.jpg'
+import  banner from '../../../media/banner.jpg';
 
 const ButtonWrapper = styled.div`
 
     width: 100%;
     height: 75px;
-
-    margin: 0;
-
     display: flex;
     justify-content: space-around;
 
@@ -73,10 +70,10 @@ export const TopNavBar: FC = () => {
             <ButtonWrapper>
                 
                     <Button to="/">Strona Główna</Button>
-                    <Button to ="/cennik">Cennik</Button>
-                    <Button>O nas</Button>
-                    <Button>Kontakt</Button>
-                    <Button>Logowanie</Button>
+                    <Button to ="/price">Cennik</Button>
+                    <Button to ="/aboutas">O nas</Button>
+                    <Button to ="/contact">Kontakt</Button>
+                    <Button to ="/">Logowanie</Button>
                 
             </ButtonWrapper>
         </NavBarWrapper>

@@ -7,13 +7,19 @@ import {
     Link
   } from "react-router-dom";
 
+
+
 import { TopNavBar } from './TopNavBar/TopNavBar';
 import { MainPage } from './MainPage/MainPage';
-import { CennikPage } from './CennikPage/CennikPage'
+import { PricePage } from './PricePage/PricePage';
+import { AboutPage } from './AboutPage/AboutPage';
+import { ContactPage } from './ContactPage/ContactPage';
+import {RightNavBar} from '../AppPage/RightNavBar/RightNavBar';
 
 const Wrapper = styled.div`
-
+    height: 100%;
 `;
+
 
 export const FrontPage: FC = () => {
 
@@ -21,15 +27,22 @@ export const FrontPage: FC = () => {
         
             <Router>
                 <Wrapper>
-                    
                     <TopNavBar />
-                    
                     <Switch>
                         <Route exact path="/">
                             <MainPage />
                         </Route>
-                        <Route path="/cennik">
-                            <CennikPage />
+                        <Route path="/price">
+                            <PricePage />
+                        </Route>
+                        <Route path="/aboutas">
+                            <AboutPage />
+                        </Route>
+                        <Route path="/contact">
+                            <ContactPage />
+                        </Route>
+                        <Route path="/aaa">
+                            <RightNavBar />
                         </Route>
                     </Switch>
                 </Wrapper>
