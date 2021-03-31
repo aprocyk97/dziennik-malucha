@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { Reset } from 'styled-reset';
 import{ AppPage } from './components/AppPage/AppPage';
-import { FrontPage } from './components/FrontPage/FrontPage';
+
 
 
 const Wrapper = styled.div`
@@ -14,7 +14,7 @@ ReactDOM.render(
   
     <Wrapper>
       <Reset />
-      <FrontPage />
+      <AppPage />
     </Wrapper>
   ,
   document.getElementById('root')
