@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { Reset } from 'styled-reset';
 import{ AppPage } from './components/AppPage/AppPage';
+import { KindergardenProvider } from './context/KindergardenContext';
 
 
 
@@ -14,7 +15,9 @@ ReactDOM.render(
   
     <Wrapper>
       <Reset />
-      <AppPage />
+      <KindergardenProvider>
+        <AppPage /> 
+      </KindergardenProvider>
     </Wrapper>
   ,
   document.getElementById('root')

@@ -1,7 +1,7 @@
 import React, {FC, useState, useEffect} from 'react';
 import {useAuth} from '../../../context/AuthContext';
 import styled from 'styled-components';
-import {Link, useHistory} from 'react-router-dom';
+import {Link, useHistory, useRouteMatch} from 'react-router-dom';
 import {db} from '../../../firebase'; 
 
 import {Colors} from '../../../styledHelpers/Colors';
@@ -12,6 +12,7 @@ import
     LoginButton
 
 } from '../../../styledHelpers/LoginFormStyling';
+import { useKindergarden } from '../../../context/KindergardenContext';
 
 
 const Wrap = styled(Wrapper)`
@@ -63,8 +64,10 @@ export const UserProfile:FC = () => {
     
 
     const {logout, getUser} = useAuth();
+    const {setKindergarden, getKindergarden} = useKindergarden();
     const history = useHistory();
     const userRef = db.collection('users').doc(getUser());
+    let match = useRouteMatch('/dziennik-malucha');
 
     useEffect(()=>{
         const fetchData = async () => {
@@ -118,7 +121,7 @@ export const UserProfile:FC = () => {
 
         try{
             await logout();
-            history.push('/login');
+            history.push(`${match.path}/login`);
         }catch{
             setError('Wystąpił błąd podczas wylogowywania.')
         }
@@ -140,7 +143,10 @@ export const UserProfile:FC = () => {
             <h1>Twoje przedszkola</h1>
             <ul>
                 {kindergardens && kindergardens.map(value => {
-                    return <StyledListElement><Link to={value?.id} >{value.name}</Link></StyledListElement>
+                    return <StyledListElement><Link to={`/${value?.id}/strona-glowna`} onClick={() => {
+                        setKindergarden(value.id);
+                        console.log(getKindergarden());
+                    }} >{value.name}</Link></StyledListElement>
                 })}
 
             </ul>
