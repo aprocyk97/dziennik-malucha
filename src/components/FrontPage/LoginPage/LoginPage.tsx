@@ -30,7 +30,7 @@ export const LoginPage:FC = () => {
     const emailRef = useRef<HTMLInputElement>();
     const passwordRef = useRef<HTMLInputElement>();
     const history = useHistory();
-    const {login, getUser} = useAuth();
+    const {login} = useAuth();
     let match = useRouteMatch('/dziennik-malucha');
 
     library.add(fas);
@@ -42,7 +42,7 @@ export const LoginPage:FC = () => {
             setError('');
             setLoading(true);
             await login(emailRef.current?.value, passwordRef.current?.value);
-            const user = getUser();
+            
 
             
             history.push(`${match.path}/profile`);

@@ -64,7 +64,7 @@ export const UserProfile:FC = () => {
     
 
     const {logout, getUser} = useAuth();
-    const {setKindergarden, getKindergarden} = useKindergarden();
+    const {setKindergarden, getKindergardenUser} = useKindergarden();
     const history = useHistory();
     const userRef = db.collection('users').doc(getUser());
     let match = useRouteMatch('/dziennik-malucha');
@@ -129,7 +129,9 @@ export const UserProfile:FC = () => {
     }
 
     return (
-        <Wrap>
+        <Wrap>  
+            
+            {console.log('Test user: ', getKindergardenUser())}
             <ColumnWrap>
                 {error && <div>{error}</div>}
                 {/* Profil Użytkownika: {JSON.stringify(data)} */}
@@ -143,10 +145,16 @@ export const UserProfile:FC = () => {
             <h1>Twoje przedszkola</h1>
             <ul>
                 {kindergardens && kindergardens.map(value => {
-                    return <StyledListElement><Link to={`/${value?.id}/strona-glowna`} onClick={() => {
-                        setKindergarden(value.id);
-                        console.log(getKindergarden());
-                    }} >{value.name}</Link></StyledListElement>
+                    return <StyledListElement>
+                        <Link 
+                            to={`/${value?.id}/strona-glowna`} 
+                            onClick={() => {
+                                setKindergarden(value.id);
+                            }} 
+                        >
+                            {value.name}
+                        </Link>
+                        </StyledListElement>
                 })}
 
             </ul>

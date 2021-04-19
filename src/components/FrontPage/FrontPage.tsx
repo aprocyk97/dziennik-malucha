@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import styled from 'styled-components';
 import {
     BrowserRouter as Router,
@@ -20,8 +20,8 @@ import { RegisterPage } from './RegisterPage/RegisterPage';
 import { UserProfile } from './UserProfile/UserProfile';
 import { ForgotPasswordPage } from './ForgotPasswordPage/ForgotPasswordPage';
 
-import { PrivateRoute } from '../../tools/PrivateRoute';
-import { LoggedRoute } from '../../tools/LoggedRoute';
+import { PrivateRoute } from '../common/PrivateRoute';
+import { LoggedRoute } from '../common/LoggedRoute';
 
 
 
@@ -39,6 +39,7 @@ const StickyWrapper = styled.div`
 export const FrontPage: FC = () => {
 
     let match = useRouteMatch();
+
 
     return (
 

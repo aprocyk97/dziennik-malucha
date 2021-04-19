@@ -14,7 +14,8 @@ import { fontSize } from '../../../styledHelpers/FontSizes';
 
 
 const NavWrapper = styled.div`
-    height: 100vh;
+    
+    min-height: 100vh;
     width: 20vw;
     background-color: ${Colors.borderGreen};
     display: flex;
@@ -59,7 +60,9 @@ export const LeftNav: FC = () => {
         <NavWrapper>
             <NavButton to={`${match.url}/strona-glowna`}> Strona Główna </NavButton>
             <NavButton to={`${match.url}/aktualnosci`}> Aktualności </NavButton>
-            <NavButton to={`${match.url}/strona-glowna`}> Button3 </NavButton>
+            <NavButton to={`${match.url}/grupy`}> Grupy </NavButton>
+            <NavButton to={`${match.url}/admin`}> Panel Administratora </NavButton>
+           
             <NavButton to={`/`}>  Powrót </NavButton>
         </NavWrapper>
     )
