@@ -24,13 +24,22 @@ interface FeeProps extends React.HTMLProps<HTMLDivElement>{
     additionalInfo: string;
  };
 
+ const trasformPeriod = (pricePeriod: string) => {
+    switch(pricePeriod) {
+     case 'monthly':
+            return 'miesięcznie';
+        case 'yearly':
+            return 'rocznie';
+    }
+ }
+
 
 export const NewPrice = (props: FeeProps) => {
 
     return(
         <Wrapper>
             Pakiet: {props.name}<br></br>
-            Cena: {props.priceValue}/{props.pricePeriod} <br></br>
+            Cena: {props.priceValue}zł/{trasformPeriod(props.pricePeriod)} <br></br>
             Informacje: {props.additionalInfo}<br></br>
         </Wrapper>
     );

@@ -35,7 +35,7 @@ const Card = styled.div`
 export const PricePage: FC = () => {
     const { isAdmin } = useUser();
     const [fees, setFees] = useState<Fee[]>([]);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm<Fee>();
 
     const addFee = async (data) => {
         const newFee = {
@@ -68,17 +68,21 @@ export const PricePage: FC = () => {
             {
                 isAdmin() && (
                     <form onSubmit={handleSubmit(addFee)}>
-                        <label htmlFor="name">Nazwa pakietu</label>
+                        <label>Nazwa pakietu</label>
                         <input id="name" {...register('name', { required: true })} />
-                        <label htmlFor="priceValue">Cena pakietu</label>
-                        <input id="priceValue" type="number" {...register('priceValue', { required: true, min: 1 })} />
-                        <label htmlFor="pricePeriod">Okres pakietu</label>
+                        {errors?.name?.type === "required" && <p>Nazwa pakietu jest wymagana</p>}
+                        <label>Cena pakietu</label>
+                        <input type="number" id="priceValue" {...register('priceValue', { required: true, min: 1 })} />
+                        {errors?.priceValue?.type === "required" && <p>Cena pakietu jest wymagana</p>}
+                        {errors?.priceValue?.type === "min" && <p>Cena pakietu musi wynosić co najmniej 1</p>}
+                        <label>Okres pakietu</label>
                         <select id="pricePeriod" {...register("pricePeriod", { required: true })}>
                             <option value="monthly">miesięczny</option>
                             <option value="yearly">roczny</option>
                         </select>
-                        <label htmlFor="additionalInfo">Szczegóły</label>
-                        <input id="additionalInfo" {...register('priceValue', { required: true })}/>
+                        {errors?.pricePeriod?.type === "required" && <p>Okres trwania pakietu musi być zdefiniowany</p>}
+                        <label>Szczegóły</label>
+                        <input id="additionalInfo" defaultValue="" {...register('additionalInfo', {})}/>
                         <input type="submit" />
                     </form>
                 )

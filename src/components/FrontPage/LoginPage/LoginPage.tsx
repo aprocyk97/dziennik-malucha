@@ -27,14 +27,14 @@ export const LoginPage:FC = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const emailRef = useRef<HTMLInputElement>();
-    const passwordRef = useRef<HTMLInputElement>();
+    const emailRef = useRef<HTMLInputElement | null>(null);
+    const passwordRef = useRef<HTMLInputElement | null>(null);
     const history = useHistory();
     const {login, getUser} = useAuth();
 
     library.add(fas);
 
-    async function handleSubmit(e){
+    async function handleSubmit(e: any){
         e.preventDefault();
 
         try{

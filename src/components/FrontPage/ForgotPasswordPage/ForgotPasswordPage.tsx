@@ -18,15 +18,15 @@ import
 
 export const ForgotPasswordPage: FC = () => {
 
-    const emailRef = useRef<HTMLInputElement>();
+    const emailRef = useRef<HTMLInputElement | null>(null);
 
-    const [loading, setLoading] = useState<Boolean>();
+    const [loading, setLoading] = useState<boolean>();
     const [error, setError] = useState<string>();
 
     const {forgotPassword} = useAuth();
 
 
-    async function handleSubmit(e:Event){
+    async function handleSubmit(e:any){
         e.preventDefault();
 
         try{

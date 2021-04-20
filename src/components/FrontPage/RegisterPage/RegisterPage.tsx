@@ -24,11 +24,11 @@ export const RegisterPage:FC = () => {
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState(false);
 
-    const emailRef = useRef<HTMLInputElement>();
-    const passwordRef = useRef<HTMLInputElement>();
-    const nameRef = useRef<HTMLInputElement>();
-    const surnameRef = useRef<HTMLInputElement>();
-    const confirmPasswordRef = useRef<HTMLInputElement>();
+    const emailRef = useRef<HTMLInputElement | null>(null);
+    const passwordRef = useRef<HTMLInputElement | null>(null);
+    const nameRef = useRef<HTMLInputElement | null>(null);
+    const surnameRef = useRef<HTMLInputElement | null>(null);
+    const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
     const history = useHistory();
 
     const  {signup, currentUser, getUser}  = useAuth();
