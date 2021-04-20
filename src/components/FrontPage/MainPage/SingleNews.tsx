@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, PureComponent } from 'react';
 import styled from 'styled-components';
 
 import {Wrapper} from '../../../styledHelpers/Components';
@@ -14,10 +14,14 @@ const Ul = styled.div`
     border-radius: 5px;
 `;
 
-export const SingleNews: FC = () => {
+interface PrimitiveProps extends React.HTMLProps<HTMLDivElement>{
+    text: string;
+ };
+
+export const SingleNews = (props: PrimitiveProps) => {
     return(
         <div>
-            <Ul>Witam bardzo serdecznie</Ul>
+            <Ul>{props.text}</Ul>
             <br></br>
         </div>
     )

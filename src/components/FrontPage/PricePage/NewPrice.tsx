@@ -17,17 +17,21 @@ const Logo = styled.img`
    
 `;
 
-interface PrimitiveProps extends React.HTMLProps<HTMLDivElement>{
-    text: string;
+interface FeeProps extends React.HTMLProps<HTMLDivElement>{
+    name: string;
+    priceValue: number;
+    pricePeriod: string;
+    additionalInfo: string;
  };
 
 
-export const SimpleInformation = (props: PrimitiveProps) => {
+export const NewPrice = (props: FeeProps) => {
 
     return(
         <Wrapper>
-            <Logo src={people}/>
-            {props.text}
+            Pakiet: {props.name}<br></br>
+            Cena: {props.priceValue}/{props.pricePeriod} <br></br>
+            Informacje: {props.additionalInfo}<br></br>
         </Wrapper>
     );
 

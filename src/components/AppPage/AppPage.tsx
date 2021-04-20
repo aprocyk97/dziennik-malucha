@@ -10,6 +10,7 @@ import {
 
 import { FrontPage } from '../FrontPage/FrontPage';
 import {AuthProvider} from '../../context/AuthContext'
+import { UserProvider } from '../../context/UserContext';
 
 
 const Wrapper = styled.div`
@@ -20,10 +21,11 @@ export const AppPage: FC = () => {
 
     return(
         <AuthProvider>
-            <Wrapper>
-                <FrontPage />
-            </Wrapper>
-
+            <UserProvider>
+                <Wrapper>
+                    <FrontPage />
+                </Wrapper>
+            </UserProvider>
         </AuthProvider>
     );
 

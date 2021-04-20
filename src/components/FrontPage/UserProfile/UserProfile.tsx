@@ -12,6 +12,7 @@ import
     LoginButton
 
 } from '../../../styledHelpers/LoginFormStyling';
+import { useUser } from '../../../context/UserContext';
 
 
 const Wrap = styled(Wrapper)`
@@ -57,57 +58,20 @@ const StyledListElement = styled.li`
 export const UserProfile:FC = () => {
 
     const [error, setError] = useState('');
-    const [sortedData, setSortedData] = useState<Array<any>>();
     const [loading, setLoading] = useState<Boolean>(true);
-    const [kindergardens, setKindergardens] = useState<Array<any>>();
     
 
-    const {logout, getUser} = useAuth();
+    const {logout} = useAuth();
+    const { userProfileData, getUserKindergartens } = useUser();
     const history = useHistory();
-    const userRef = db.collection('users').doc(getUser());
-
-    useEffect(()=>{
-        const fetchData = async () => {
-            userRef.get().then((doc) => {
-                if(doc.exists) {
-                    sortData(doc.data());
-                    setLoading(false);
-                } else {
-                    setError('Brak danych użytkownika w systemie');
-                }
-            }).catch((error) => {
-                setError('Błąd podczas pobierania danych z serwera')
-            });
-        };
-        fetchData();
-        
-        
-    }, []);
-
-    function sortData(obj: object | undefined){
-        let arr: any[] = [];
-        
-        Object.entries(obj!).map(([key, value]) => {
-            key !== 'kindergardens'?  arr.push([key,value]): setKindergardens(value);
-        })
-        arr.sort((a,b) => {
-            if (a[0] === b[0]) {
-                return 0;
-            }
-            else {
-                return (a[0] < b[0]) ? -1 : 1;
-            }
-        })
-        setSortedData(arr);
-    }
 
     function displayUserData(){
-        if(sortedData !== undefined){      
+        if(userProfileData !== undefined){      
             return(
                 <ul>
-                    {sortedData.map( obj => {
-                        return <li>{obj[0]}: {obj[1]}</li>;
-                    })}
+                    <li>Email: {userProfileData.email}</li>
+                    <li>Name: {userProfileData.name}</li>
+                    <li>Surname: {userProfileData.surname}</li>
                 </ul>
             );
         }
@@ -131,7 +95,7 @@ export const UserProfile:FC = () => {
                 {error && <div>{error}</div>}
                 {/* Profil Użytkownika: {JSON.stringify(data)} */}
                 <h1>Dane Użytkownika</h1>
-                {loading ? <div>Loading</div> : displayUserData() }
+                {displayUserData()}
                 
                 <button onClick={handleLogout}>Wyloguj</button>
             </ColumnWrap>
@@ -139,7 +103,7 @@ export const UserProfile:FC = () => {
             <ColumnWrap>
             <h1>Twoje przedszkola</h1>
             <ul>
-                {kindergardens && kindergardens.map(value => {
+                {getUserKindergartens() && getUserKindergartens().map(value => {
                     return <StyledListElement><Link to={value?.id} >{value.name}</Link></StyledListElement>
                 })}
 
