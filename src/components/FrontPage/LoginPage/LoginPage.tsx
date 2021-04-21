@@ -27,8 +27,8 @@ export const LoginPage:FC = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const emailRef = useRef<HTMLInputElement>();
-    const passwordRef = useRef<HTMLInputElement>();
+    const emailRef = useRef<any>();
+    const passwordRef = useRef<any>();
     const history = useHistory();
     const {login} = useAuth();
     let match = useRouteMatch('/dziennik-malucha');
@@ -45,7 +45,7 @@ export const LoginPage:FC = () => {
             
 
             
-            history.push(`${match.path}/profile`);
+            history.push(`${match!.path}/profile`);
             
         }catch{
             setError('Pojawił się błąd podczas logowania');    
@@ -101,8 +101,8 @@ export const LoginPage:FC = () => {
                 
             </Form>
             <AdditionalLinks>
-                <p>Zapomniałeś hasła? <Link to={`${match.url}/forgot-password`}>Kliknij</Link></p>
-                <p>Nie masz konta? <Link to={`${match.url}/register`}>Zarejestruj się</Link></p>
+                <p>Zapomniałeś hasła? <Link to={`${match!.url}/forgot-password`}>Kliknij</Link></p>
+                <p>Nie masz konta? <Link to={`${match!.url}/register`}>Zarejestruj się</Link></p>
             </AdditionalLinks>
         </Wrapper>
         </div>

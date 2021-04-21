@@ -33,13 +33,13 @@ export const KindergardenPage : FC = () => {
             
             <LeftNav/>
             <Switch>
-                <Route exact path={`${match.path}/strona-glowna`}>
+                <Route exact path={`${match!.path}/strona-glowna`}>
                     <KindergardenHomePage />
                 </Route>
-                <Route path={`${match.path}/aktualnosci`}>
+                <Route path={`${match!.path}/aktualnosci`}>
                     <KindergardenFeed/>
                 </Route>
-                <Route path ={`${match.path}/admin`}>
+                <Route path ={`${match!.path}/admin`}>
                     <KindergardenAdministratorPage />
                 </Route>
             </Switch>

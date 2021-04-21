@@ -10,7 +10,8 @@ import {
 } from "react-router-dom";
 import { useKindergarden } from '../../../context/KindergardenContext';
 import { fontSize } from '../../../styledHelpers/FontSizes';
-import { AdminFeed } from '../AdminFeed/AdminFeed';
+import { AdminFeed } from './AdminFeed/AdminFeed';
+import { AdminUsersList } from './AdminUsersList/AdminUsersList';
 
 
 const Wrapper = styled.div`
@@ -67,16 +68,19 @@ export const KindergardenAdministratorPage: FC = () => {
         <Wrapper>
             
             <AdminNav>
-                <NavButton to={`${match.url}/add-feed`}> Dodaj Aktualności </NavButton>
-                <NavButton to={`${match.url}/edit-meals`}> Edytuj Jadłospis </NavButton>
-                <NavButton to={`${match.url}/add-user`}> Dodaj użytkownika </NavButton>
-                <NavButton to={`${match.url}/user-list`}> Lista użytkowników przedszkola </NavButton>
+                <NavButton to={`${match!.url}/add-feed`}> Dodaj Aktualności </NavButton>
+                <NavButton to={`${match!.url}/edit-meals`}> Edytuj Jadłospis </NavButton>
+                <NavButton to={`${match!.url}/add-user`}> Dodaj użytkownika </NavButton>
+                <NavButton to={`${match!.url}/user-list`}> Lista użytkowników przedszkola </NavButton>
             </AdminNav>
             <AdminContent>
                 
                 <Switch>
-                    <Route path={`${match.path}/add-feed`}>
+                    <Route path={`${match!.path}/add-feed`}>
                         <AdminFeed />
+                    </Route>
+                    <Route path={`${match!.path}/user-list`}>
+                        <AdminUsersList />
                     </Route>
                 </Switch>
             </AdminContent>

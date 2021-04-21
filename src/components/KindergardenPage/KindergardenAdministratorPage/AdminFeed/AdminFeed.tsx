@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { fontSize } from '../../../styledHelpers/FontSizes';
-import {ISingleFeed} from '../../../entities/feed'
-import {db} from '../../../firebase';
-import { useKindergarden } from '../../../context/KindergardenContext';
+import { fontSize } from '../../../../styledHelpers/FontSizes';
+import {ISingleFeed} from '../../../../entities/feed'
+import {db} from '../../../../firebase';
+import { useKindergarden } from '../../../../context/KindergardenContext';
 import firebase from 'firebase';
 
 
@@ -100,8 +100,8 @@ export const AdminFeed: FC = () => {
     const todayDate = new Date();
     const ref = db.collection('kindergardens').doc(getKindergarden()).collection('data').doc('feed');
 
-    const titleRef = useRef<HTMLInputElement>();
-    const contentRef = useRef<HTMLTextAreaElement>();
+    const titleRef = useRef<any>();
+    const contentRef = useRef<any>();
 
     useEffect(() => {
         setFeed({

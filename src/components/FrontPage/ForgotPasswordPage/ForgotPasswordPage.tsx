@@ -1,4 +1,4 @@
-import React, {FC, useRef, useState} from 'react'
+import React, {ElementType, FC, useRef, useState} from 'react'
 
 
 import styled from 'styled-components';
@@ -18,15 +18,15 @@ import
 
 export const ForgotPasswordPage: FC = () => {
 
-    const emailRef = useRef<HTMLInputElement>();
+    const emailRef = useRef<HTMLInputElement>(null); //ROZWIAZANIE PROBLEMU Z TYPAMI PRZY REFACH
 
-    const [loading, setLoading] = useState<Boolean>();
+    const [loading, setLoading] = useState<boolean>();
     const [error, setError] = useState<string>();
 
     const {forgotPassword} = useAuth();
 
 
-    async function handleSubmit(e:Event){
+    async function handleSubmit(e){
         e.preventDefault();
 
         try{

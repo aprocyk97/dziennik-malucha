@@ -121,7 +121,7 @@ export const UserProfile:FC = () => {
 
         try{
             await logout();
-            history.push(`${match.path}/login`);
+            history.push(`${match!.path}/login`);
         }catch{
             setError('Wystąpił błąd podczas wylogowywania.')
         }
