@@ -12,6 +12,7 @@ import { useKindergarden } from '../../../context/KindergardenContext';
 import { fontSize } from '../../../styledHelpers/FontSizes';
 import { AdminFeed } from './AdminFeed/AdminFeed';
 import { AdminUsersList } from './AdminUsersList/AdminUsersList';
+import { AdminAddUser } from './AdminAddUser/AdminAddUser';
 
 
 const Wrapper = styled.div`
@@ -81,6 +82,9 @@ export const KindergardenAdministratorPage: FC = () => {
                     </Route>
                     <Route path={`${match!.path}/user-list`}>
                         <AdminUsersList />
+                    </Route>
+                    <Route path={`${match!.path}/add-user`}>
+                        <AdminAddUser />
                     </Route>
                 </Switch>
             </AdminContent>

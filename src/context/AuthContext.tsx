@@ -50,7 +50,7 @@ export const AuthProvider:FC = ({children}) => {
         signup,
         logout,
         forgotPassword,
-        getUser
+        getUser,
     }
 
     return (

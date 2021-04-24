@@ -68,7 +68,7 @@ export const KindergardenFeed :FC = () => {
             
             return <FeedArticle articleItem = {item} />;
             })}
-            {console.log('test',test)}
+            
         </FeedWrapper>
     )
 }

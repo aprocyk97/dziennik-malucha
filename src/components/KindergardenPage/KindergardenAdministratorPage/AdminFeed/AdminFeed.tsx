@@ -18,7 +18,7 @@ const Wrapper = styled.div`
     background-color: rgba(0, 0, 0, 0.05);
 
     border: 1px solid rgba(0, 0, 0, 0.05);
-    border-radius: 15px;
+    border-radius: 10px;
 
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 `;
@@ -111,7 +111,7 @@ export const AdminFeed: FC = () => {
             displayDate: '',
             
         })
-        console.log(`${todayDate.getDate()} ${todayDate.toLocaleString('pl-pl', {month: 'short'})} ${todayDate.getFullYear()}`)
+        
     }, [])
 
     function setDate(){
@@ -135,6 +135,13 @@ export const AdminFeed: FC = () => {
             console.log('Error occurend when updating data');
         }
         setLoading(false);
+        console.log('working');
+        setFeed({
+            ...feed!,
+            title: '',
+            content: ''
+        })
+        
     }
 
     return (
@@ -147,7 +154,8 @@ export const AdminFeed: FC = () => {
 
                     <InputText 
                         type='text' 
-                        ref = {titleRef}
+                        // ref = {titleRef}
+                        value={feed?.title}
                         required
                         onChange = {e => {
                             setFeed({
@@ -160,7 +168,8 @@ export const AdminFeed: FC = () => {
                 <StyledLabel>
                     <p>Zawartość aktualności: </p>
                     <StyledTextArea
-                        ref={contentRef}
+                        // ref={contentRef}
+                        value={feed?.content}
                         required
                         onChange = {e => {
                             setFeed({
