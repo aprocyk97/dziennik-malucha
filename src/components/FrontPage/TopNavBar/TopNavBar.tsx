@@ -7,7 +7,8 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Link,
+    useRouteMatch
   } from "react-router-dom";
 import {useAuth} from '../../../context/AuthContext';
 
@@ -22,6 +23,7 @@ const ButtonWrapper = styled.div`
     width: 100%;
     height: 75px;
 
+    position: sticky;
     
 
     display: flex;
@@ -70,6 +72,8 @@ const Button = styled(Link)`
 const NavBarWrapper = styled.div`
     width: 100%;
     
+    
+    
 
     background-color: ${Colors.basicGreen};
 `;
@@ -88,6 +92,7 @@ export const TopNavBar: FC = () => {
     const {currentUser} = useAuth();
 
     library.add(fas);
+    let match = useRouteMatch();
 
     return(
         
@@ -95,15 +100,15 @@ export const TopNavBar: FC = () => {
             <Logo src={banner}/>
             <ButtonWrapper>
                 
-                    <Button to="/">Strona Główna</Button>
-                    <Button to ="/price">Cennik</Button>
-                    <Button to ="/aboutas">O nas</Button>
-                    <Button to ="/contact">Kontakt</Button>
+                    <Button to={`${match.url}/home`}>Strona Główna</Button>
+                    <Button to ={`${match.url}/price`}>Cennik</Button>
+                    <Button to ={`${match.url}/aboutas`}>O nas</Button>
+                    <Button to ={`${match.url}/contact`}>Kontakt</Button>
                     {currentUser === null ?
-                     <Button to="/login"><FontAwesomeIcon icon="sign-in-alt" /></Button> :
-                     <Button to="/profile"><FontAwesomeIcon icon="user" /></Button>
+                     <Button to={`${match.url}/login`}><FontAwesomeIcon icon="sign-in-alt" /></Button> :
+                     <Button to={`${match.url}/profile`}><FontAwesomeIcon icon="user" /></Button>
                     }
-                    {console.log(currentUser)}
+                    
                 
             </ButtonWrapper>
             

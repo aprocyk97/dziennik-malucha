@@ -1,6 +1,6 @@
 import React, {FC, useRef, useState} from 'react'
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -30,7 +30,8 @@ export const LoginPage:FC = () => {
     const emailRef = useRef<HTMLInputElement | null>(null);
     const passwordRef = useRef<HTMLInputElement | null>(null);
     const history = useHistory();
-    const {login, getUser} = useAuth();
+    const {login} = useAuth();
+    let match = useRouteMatch('/dziennik-malucha');
 
     library.add(fas);
 
@@ -41,10 +42,11 @@ export const LoginPage:FC = () => {
             setError('');
             setLoading(true);
             await login(emailRef.current?.value, passwordRef.current?.value);
-            const user = getUser();
-            console.log(user);
             
-            history.push('/profile');
+
+            
+            history.push(`${match!.path}/profile`);
+            
         }catch{
             setError('Pojawił się błąd podczas logowania');    
         }
@@ -99,8 +101,8 @@ export const LoginPage:FC = () => {
                 
             </Form>
             <AdditionalLinks>
-                <p>Zapomniałeś hasła? <Link to="/forgot-password">Kliknij</Link></p>
-                <p>Nie masz konta? <Link to="/register">Zarejestruj się</Link></p>
+                <p>Zapomniałeś hasła? <Link to={`${match!.url}/forgot-password`}>Kliknij</Link></p>
+                <p>Nie masz konta? <Link to={`${match!.url}/register`}>Zarejestruj się</Link></p>
             </AdditionalLinks>
         </Wrapper>
         </div>

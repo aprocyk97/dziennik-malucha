@@ -4,13 +4,16 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
-  } from "react-router-dom";
+    Link,
+    Redirect
+} from "react-router-dom";
 
 
 import { FrontPage } from '../FrontPage/FrontPage';
-import {AuthProvider} from '../../context/AuthContext'
 import { UserProvider } from '../../context/UserContext';
+import { AuthProvider } from '../../context/AuthContext'
+import { KindergardenPage } from '../KindergardenPage/KindergardenPage';
+import { KindergardenProvider, useKindergarden } from '../../context/KindergardenContext';
 
 
 const Wrapper = styled.div`
@@ -19,13 +22,31 @@ const Wrapper = styled.div`
 
 export const AppPage: FC = () => {
 
-    return(
+    const {getKindergarden} = useKindergarden();
+
+    return (
         <AuthProvider>
-            <UserProvider>
+            
+
                 <Wrapper>
-                    <FrontPage />
+                    <Router>
+                        <Switch>
+
+                            <Route path="/dziennik-malucha">
+                                <FrontPage />
+                            </Route>
+                            <Route path={`/${getKindergarden()}`}>
+                                <KindergardenPage />
+                            </Route>
+                            <Route exact path="/">
+                                <Redirect to="/dziennik-malucha" />
+                            </Route>
+                        </Switch>
+                    </Router>
+
                 </Wrapper>
-            </UserProvider>
+
+            
         </AuthProvider>
     );
 

@@ -2,13 +2,14 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import {FC} from 'react';
 import { useUser } from '../../../context/UserContext';
 import styled from 'styled-components';
-
-import {Wrapper} from '../../../styledHelpers/Components';
-import {Contener} from '../../../styledHelpers/Components';
 import { FrontPage } from '../FrontPage';
-
-import {SingleNews} from './SingleNews';
 import { db } from '../../../firebase'
+import { Wrapper } from '../../../styledHelpers/Components';
+import { Contener } from '../../../styledHelpers/Components';
+
+
+import { SingleNews } from './SingleNews';
+
 
 interface News {
     text: string

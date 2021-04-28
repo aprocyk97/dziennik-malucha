@@ -1,5 +1,6 @@
 import React, {FC, useContext, useState, useEffect} from 'react';
 import { auth } from '../firebase';
+import { useKindergarden } from './KindergardenContext';
 
 const AuthContext = React.createContext({} as any);
 
@@ -11,6 +12,7 @@ export const AuthProvider:FC = ({children}) => {
 
     const [currentUser, setCurrentUser] = useState();
     const [loading, setLoading] = useState<Boolean>(true);
+    const {setKindergardenUser} = useKindergarden();
 
     function signup(email: string, password: string) {
         return auth.createUserWithEmailAndPassword(email, password);
@@ -35,6 +37,7 @@ export const AuthProvider:FC = ({children}) => {
     useEffect(() => {
             const unsubscribe = auth.onAuthStateChanged(user => {
             setCurrentUser(user as any);
+            setKindergardenUser(user?.uid); 
             setLoading(false);
         })
 
@@ -47,7 +50,7 @@ export const AuthProvider:FC = ({children}) => {
         signup,
         logout,
         forgotPassword,
-        getUser
+        getUser,
     }
 
     return (
