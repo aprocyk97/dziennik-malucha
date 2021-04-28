@@ -14,6 +14,7 @@ import { KindergardenHomePage } from './KindergardenHomePage/KindergardenHomePag
 import { KindergardenFeed } from './KindergardenFeed/KindergardenFeed';
 import { Colors } from '../../styledHelpers/Colors';
 import { KindergardenAdministratorPage } from './KindergardenAdministratorPage/KindergardenAdministratorPage';
+import { KindergardenMeals } from './KindergardenMeals/KindergardenMeals';
 
 
 const Wrapper = styled.div`
@@ -41,6 +42,9 @@ export const KindergardenPage : FC = () => {
                 </Route>
                 <Route path ={`${match!.path}/admin`}>
                     <KindergardenAdministratorPage />
+                </Route>
+                <Route path ={`${match!.path}/jadlospis`}>
+                    <KindergardenMeals />
                 </Route>
             </Switch>
         </Wrapper>

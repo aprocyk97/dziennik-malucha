@@ -24,7 +24,7 @@ export type Users = {
     power: string;
     uid: string;
 }
-        //TODO: FETCH USER NAME, SURNAME BASED ON UID AND MERGE IT WITH POWER
+
 export const fetchUserList = async (kindergarden: string): Promise<Users[]> => {
     
     const ref = db.collection('kindergardens').doc(kindergarden);
@@ -46,7 +46,7 @@ export type KindergardenUser = {
     uid: string;
     power: string;
 }
-    //
+
 export const fetchUserData = async (userList: Users[]): Promise<KindergardenUser[]> => {
 
     const ref = db.collection('users');
@@ -78,10 +78,9 @@ export const fetchUserData = async (userList: Users[]): Promise<KindergardenUser
         }
         
     })
-    // return tempUserData;
     return temp;
 }
-
+    // TODO: ALSO SHOULD DELETE KINDERGARDEN RELATION IN PAGE USERS TAB
 export const removeKindergardenUser = async(uid: string, kindg: string): Promise<any> => {
     const ref = db.collection('kindergardens').doc(kindg);
     const userList: Users[] = await fetchUserList(kindg);
@@ -124,7 +123,7 @@ export const getUsers = async(): Promise<PageUser[]> => {
     })
     return tempUserData;
 }
-
+    // TODO: ALSO SHOULD ADD KINDERGARDEN RELATION IN PAGE USERS TAB
 export const addKindergardenUser = async(email: string, userPower:string, kindg: string): Promise<any> => {
     const kindergardenRef = db.collection('kindergardens').doc(kindg);
     const usersL = await getUsers();
@@ -148,4 +147,36 @@ export const addKindergardenUser = async(email: string, userPower:string, kindg:
     
 
 
+}
+
+
+export interface ISingleMeal {
+    meal: string;
+    amount: string;
+    allergens: string[];
+}
+
+export interface IDayMeals {
+    breakfast: ISingleMeal[];
+    dinner: ISingleMeal[];
+    teatime: ISingleMeal[];
+    id: string;
+}
+
+export const getMeals = async(kindergarden: string): Promise<IDayMeals[]> => {
+    const ref = db.collection('kindergardens').doc(kindergarden).collection('data').doc('meals');
+    let arr = Array();
+
+    await ref.get().then((doc) => {
+        if(doc.exists){
+
+            Object.entries(doc.data()!).map(([id, value]) => {
+                arr.push({id, ...value })
+            })
+        }
+    }).catch(error => {
+        console.log('Error occured when fetching meals', error);
+    })
+
+    return arr;
 }

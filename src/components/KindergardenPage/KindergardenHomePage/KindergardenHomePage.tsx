@@ -9,18 +9,12 @@ export const KindergardenHomePage: FC = () => {
 
     const {getKindergarden} = useKindergarden();
 
-    useEffect(() => {
-        const fetchData = async() =>{
-            const data = await fetchUserList(getKindergarden());
-            setUserList(data);
-        }
-        fetchData();
-    }, [])
+
 
     return (
         <div>
             To jest HomePage
-            {console.log(userList)}
+            
         </div>
     )
 }

@@ -13,6 +13,7 @@ import { fontSize } from '../../../styledHelpers/FontSizes';
 import { AdminFeed } from './AdminFeed/AdminFeed';
 import { AdminUsersList } from './AdminUsersList/AdminUsersList';
 import { AdminAddUser } from './AdminAddUser/AdminAddUser';
+import { AdminAddMeal } from './AdminAddMeal/AdminAddMeal';
 
 
 const Wrapper = styled.div`
@@ -85,6 +86,9 @@ export const KindergardenAdministratorPage: FC = () => {
                     </Route>
                     <Route path={`${match!.path}/add-user`}>
                         <AdminAddUser />
+                    </Route>
+                    <Route path={`${match!.path}/edit-meals`}>
+                        <AdminAddMeal />
                     </Route>
                 </Switch>
             </AdminContent>

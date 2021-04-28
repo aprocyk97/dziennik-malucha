@@ -60,6 +60,7 @@ export const LeftNav: FC = () => {
         <NavWrapper>
             <NavButton to={`${match!.url}/strona-glowna`}> Strona Główna </NavButton>
             <NavButton to={`${match!.url}/aktualnosci`}> Aktualności </NavButton>
+            <NavButton to={`${match!.url}/jadlospis`}> Jadłospis </NavButton>
             <NavButton to={`${match!.url}/grupy`}> Grupy </NavButton>
             <NavButton to={`${match!.url}/admin`}> Panel Administratora </NavButton>
            
