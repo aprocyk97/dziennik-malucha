@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import {Wrapper} from '../../../styledHelpers/Components';
 import {Contener} from '../../../styledHelpers/Components';
 import { FrontPage } from '../FrontPage';
+import logout from '../../media/icons/logout.png';
 
 import {SingleNews} from './SingleNews';
 import { db } from '../../../firebase'
