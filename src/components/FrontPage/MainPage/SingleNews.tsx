@@ -24,6 +24,7 @@ const Button = styled.img`
 `;
 
 
+
 interface PrimitiveProps extends React.HTMLProps<HTMLDivElement>{
     text: string;
  };

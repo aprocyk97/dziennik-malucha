@@ -25,6 +25,26 @@ const DIV = styled.div`
     padding-left: 20px;
     border-radius: 5px;
 `;
+const SearchWrapper = styled.div`
+    display: flex;
+    border: 2px solid gray;
+    width: 100%;
+    border-radius: 5px;
+    height: 50%;
+    align-items: center;
+    background-color: white;
+    //img{
+    //   margin: 0 0.5vh;
+    //}
+`;
+const Search = styled.input`
+    background-color: transparent;
+    margin: 0 0.2vw;
+    height: 90%;
+    width: 100%;
+    border: none;
+    outline: none;
+`;
 
 export const MainPage: FC = () => {
     const { isAdmin } = useUser();
@@ -58,8 +78,10 @@ export const MainPage: FC = () => {
             {
                 isAdmin() && (
                     <DIV>
-                        <button onClick={() => addNews()}>Dodaj wiadomość</button>
-                        <input type="text" onChange={(e) => setNewsText(e.target.value)} />
+                        <SearchWrapper>
+                            <button onClick={() => addNews()}>Dodaj wiadomość</button>
+                            <Search type="text" onChange={(e) => setNewsText(e.target.value)} />
+                        </SearchWrapper>
                     </DIV>
                 )
             }<br></br>
