@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
+    deleteUserKindergarden,
     fetchUserData,
     fetchUserList,
     KindergardenUser,
@@ -11,6 +12,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { title } from 'node:process';
+import { AdminAddUser } from '../AdminAddUser/AdminAddUser';
 
 
 const Wrapper = styled.div`
@@ -44,12 +46,18 @@ const TitleCell = styled.th`
     padding: 1vh 1vw;
     border-bottom: 2px solid darkgray;
 `;
+const RemoveButton = styled(FontAwesomeIcon)`
+
+    &:hover{
+        cursor: pointer;
+    }
+`;
 
 export const AdminUsersList: FC = () => {
 
     const [kindergardenUserList, setKindergardenUserList] = useState<KindergardenUser[]>();
 
-    const { getKindergarden } = useKindergarden();
+    const { getKindergarden, getKindergardenName } = useKindergarden();
 
     library.add(fas);
 
@@ -71,13 +79,11 @@ export const AdminUsersList: FC = () => {
 
     }, [])
 
-    const DeleteUser = async(uid: string) => {
-        await removeKindergardenUser(uid, getKindergarden());
-    }
+
 
     return (
         <Wrapper>
-            
+            <AdminAddUser />
             <Table>
                 <Row>
                     <TitleCell>Imię</TitleCell>
@@ -104,7 +110,10 @@ export const AdminUsersList: FC = () => {
                                     {item.power}
                                 </Cell>
                                 <Cell>
-                                    <FontAwesomeIcon icon="times-circle" color="red" size="lg" onClick={() => { removeKindergardenUser(item.uid, getKindergarden())}} />
+                                    <RemoveButton icon="times-circle" color="red" size="lg" onClick={() => { 
+                                        removeKindergardenUser(item.uid, getKindergarden())
+                                        deleteUserKindergarden(item.uid, getKindergarden(), getKindergardenName());     
+                                        }} />
                                     <FontAwesomeIcon icon='envelope' color="white" size='lg' />
                                 </Cell>
                             </Row>

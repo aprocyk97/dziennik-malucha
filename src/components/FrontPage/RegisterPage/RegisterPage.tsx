@@ -1,5 +1,5 @@
 import React, {FC, useRef, useState} from 'react'
-import {Link, useHistory} from 'react-router-dom';
+import {Link, useHistory, useRouteMatch} from 'react-router-dom';
 import {db} from '../../../firebase';
 
 import {useAuth} from '../../../context/AuthContext';
@@ -29,6 +29,8 @@ export const RegisterPage:FC = () => {
     const nameRef = useRef<HTMLInputElement | null>(null);
     const surnameRef = useRef<HTMLInputElement | null>(null);
     const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
+
+    let match = useRouteMatch('/dziennik-malucha');
     const history = useHistory();
 
     const  {signup, currentUser, getUser}  = useAuth();
@@ -48,10 +50,11 @@ export const RegisterPage:FC = () => {
             await db.collection('users').doc(getUser()).set({
                 name: nameRef.current?.value,
                 surname: surnameRef.current?.value,
-                email: emailRef.current?.value
+                email: emailRef.current?.value,
+                kindergardens: []
             });
 
-            await history.push('/profile');
+            history.push(`${match!.path}/profile`);
 
         }catch{
             setError('Pojawił się problem z utworzeniem konta')

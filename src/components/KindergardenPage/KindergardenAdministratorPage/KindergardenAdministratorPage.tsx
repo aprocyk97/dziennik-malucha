@@ -72,7 +72,6 @@ export const KindergardenAdministratorPage: FC = () => {
             <AdminNav>
                 <NavButton to={`${match!.url}/add-feed`}> Dodaj Aktualności </NavButton>
                 <NavButton to={`${match!.url}/edit-meals`}> Edytuj Jadłospis </NavButton>
-                <NavButton to={`${match!.url}/add-user`}> Dodaj użytkownika </NavButton>
                 <NavButton to={`${match!.url}/user-list`}> Lista użytkowników przedszkola </NavButton>
             </AdminNav>
             <AdminContent>
@@ -83,9 +82,6 @@ export const KindergardenAdministratorPage: FC = () => {
                     </Route>
                     <Route path={`${match!.path}/user-list`}>
                         <AdminUsersList />
-                    </Route>
-                    <Route path={`${match!.path}/add-user`}>
-                        <AdminAddUser />
                     </Route>
                     <Route path={`${match!.path}/edit-meals`}>
                         <AdminAddMeal />
