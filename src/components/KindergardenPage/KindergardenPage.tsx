@@ -17,6 +17,7 @@ import { KindergardenAdministratorPage } from './KindergardenAdministratorPage/K
 import { KindergardenMeals } from './KindergardenMeals/KindergardenMeals';
 import { isAdmin, issAdmin } from '../../action/fetchKindergarden';
 import { KindergardenAdminRoute } from '../common/KindergardenAdminRoute';
+import { KindergardenGroupsPage } from './KindergardenGroupsPage/KindergardenGroupsPage';
 
 
 const Wrapper = styled.div`
@@ -26,7 +27,7 @@ const Wrapper = styled.div`
 
 export const KindergardenPage: FC = () => {
 
-    const { getKindergarden, getKindergardenUser, setIsAdmin } = useKindergarden();
+    const { getKindergarden, getKindergardenUser, getKindergardenGroup } = useKindergarden();
     let match = useRouteMatch(`/${getKindergarden()}`);
 
     const [isUserAdmin, setIsUserAdmin] = useState<boolean>();
@@ -36,7 +37,7 @@ export const KindergardenPage: FC = () => {
         issAdmin(getKindergardenUser(), getKindergarden())
             .then(result => {
                 setIsUserAdmin(result);
-                
+
             })
     }, [])
 
@@ -52,22 +53,21 @@ export const KindergardenPage: FC = () => {
                 <Route path={`${match!.path}/aktualnosci`}>
                     <KindergardenFeed />
                 </Route>
-                {/* <KindergardenAdminRoute
-                    path={`${match!.path}/admin`}
-                    component={KindergardenAdministratorPage}
-                /> */}
                 {
-                    isUserAdmin ? 
-                    <Route path={`${match!.path}/admin`}>
-                        <KindergardenAdministratorPage />
-                    </Route>
-                    :
-                    <Route path={`${match!.path}/admin`}>
-                        <Redirect to={`${match!.url}/strona-glowna`} />
-                    </Route>
+                    isUserAdmin ?
+                        <Route path={`${match!.path}/admin`}>
+                            <KindergardenAdministratorPage />
+                        </Route>
+                        :
+                        <Route path={`${match!.path}/admin`}>
+                            <Redirect to={`${match!.url}/strona-glowna`} />
+                        </Route>
                 }
                 <Route path={`${match!.path}/jadlospis`}>
                     <KindergardenMeals />
+                </Route>
+                <Route path={`${match!.path}/${getKindergardenGroup()}`}>
+                    <KindergardenGroupsPage />
                 </Route>
             </Switch>
         </Wrapper>

@@ -62,6 +62,8 @@ interface IDropdownButton {
 
 export const DropdownButton: FC<IDropdownButton> = (props) => {
 
+    const {setKindergardenGroup} = useKindergarden();
+
     const [toggled, setToggled] = useState<boolean>(false);
 
     const handleToggle = () => setToggled(!toggled);
@@ -89,7 +91,7 @@ export const DropdownButton: FC<IDropdownButton> = (props) => {
                         {
                             props.groups !== undefined ?
                             props.groups.map(item => {
-                                return <LinkButton to={`${props.routeMatch}/${item.id}`} key={item.id}>{item.name}</LinkButton>
+                                return <LinkButton onClick={() => setKindergardenGroup(item.id)} to={`${props.routeMatch}/${item.id}`} key={item.id}>{item.name}</LinkButton>
                             })
                             :
                             null

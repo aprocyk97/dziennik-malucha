@@ -27,7 +27,7 @@ export const KindergardenProvider: FC = ({children}) => {
     const [currentKindergarden, setCurrentKindergarden] = useState<string>();
     const [currentKindergardenName, setCurrentKindergardenName] = useState<string>();
     const [currentKindergardenUser, setCurrentKindergardenUser] = useState<string>();
-    const [kindergardenUserPower, setKindergardenUserPower] = useState<string>();
+    const [currentKindergardenGroup, setCurrentKindergardenGroup] = useState<string>();
     const [isUserAdmin, setIsUserAdmin] = useState<boolean>();
 
     const [currentUserPowers, setCurrentUserPowers] = useState<IKindergardenUser>();
@@ -39,18 +39,32 @@ export const KindergardenProvider: FC = ({children}) => {
     function getKindergarden(){
         return currentKindergarden;
     }
+
+
     function setKindergardenUser(user: string){
         setCurrentKindergardenUser(user);
     }
     function getKindergardenUser(){
         return currentKindergardenUser;
     }
+
+
     function setKindergardenName(name: string){
         setCurrentKindergardenName(name);
     }
     function getKindergardenName(){
         return currentKindergardenName;
     }
+
+
+    function setKindergardenGroup(id: string){
+        setCurrentKindergardenGroup(id);
+    }
+    function getKindergardenGroup(){
+        return currentKindergardenGroup;
+    }
+
+
     function setIsAdmin(state: boolean){
         setIsUserAdmin(state);
     }
@@ -72,6 +86,7 @@ export const KindergardenProvider: FC = ({children}) => {
         setKindergarden(window.localStorage.getItem('currentKindergarden') || 'currentKindergarden');
         setKindergardenUser(window.localStorage.getItem('currentKindergardenUser') || 'currentKindergardenUser');
         setKindergardenName(window.localStorage.getItem('currentKindergardenName') || 'currentKindergardenName');
+        setKindergardenGroup(window.localStorage.getItem('currentKindergardenGroup') || 'currentKindergardenGroup');
         setLoading(false);
     }, [])
 
@@ -93,6 +108,12 @@ export const KindergardenProvider: FC = ({children}) => {
         return setLocalStorage('currentKindergardenName', currentKindergardenName)
     }, [currentKindergardenName])
 
+    useEffect(() => {
+        console.log('current group', currentKindergardenGroup);
+
+        return setLocalStorage('currentKindergardenGroup', currentKindergardenGroup)
+    }, [currentKindergardenGroup])
+
 
 
     const value = {
@@ -104,6 +125,8 @@ export const KindergardenProvider: FC = ({children}) => {
         getKindergardenName, 
         setIsAdmin,
         getIsAdmin,
+        setKindergardenGroup,
+        getKindergardenGroup,
     }
 
 

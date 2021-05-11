@@ -217,9 +217,7 @@ export const deleteUserKindergarden = async(uid: string, kindergarden: string, k
     })
 }
 
-export const addUserKindergarden = async() : Promise<any> => {
 
-}
 
 export const isAdmin = async(uid: string, kindergarden: string): Promise<any> => {
     const ref = db.collection('kindergardens').doc(kindergarden);
@@ -274,4 +272,66 @@ export const fetchUserByUid = async(uid: string, kindergarden: string): Promise<
 
     const user = (await users).filter(item => item.uid === uid);
     return user[0];
+}
+export const fetchUserByPower = async(power: string, kindergarden: string): Promise<KindergardenUser[]> => {
+
+    const users = fetchUserData(await fetchUserList(kindergarden))
+
+    return (await users).filter(item => item.power === power);
+
+}
+
+export interface IKindergardenGroups {
+    id: string;
+    name: string;
+    users: IGroupUser[];
+}
+export interface IGroupUser{
+    uid: string;
+    name: string;
+    surname: string;
+}
+export const CreateKindergardenGroup = async(kindergarden: string, group: IKindergardenGroups ) => {
+    const ref = db.collection('kindergardens').doc(kindergarden).collection('groups');
+    const groupUsers: IGroupUser[] = group.users;
+    const adminList = fetchUserByPower('admin',kindergarden);
+    (await adminList).map(item => {
+        groupUsers.push({
+            uid: item.uid,
+            name: item.name,
+            surname: item.surname
+        })
+    })
+
+    await ref.doc(group.id).set({
+        id: group.id,
+        name: group.name,
+        users: groupUsers
+    })
+        .catch(error => console.log('Error when creating group', error))
+        .finally(()=>{
+            addUsersGroup(kindergarden, groupUsers, {id: group.id, name: group.name})
+                .catch(error => console.log('Error when adding group users', error));
+        });
+}
+
+export const addUsersGroup = async(kindergarden: string, users: IGroupUser[], group: IKindergardenGroup) => {
+    const ref= db.collection('kindergardens').doc(kindergarden);
+    const userList = await fetchUserList(kindergarden);
+    users.map(usersItem => {
+        
+        const clone = JSON.parse(JSON.stringify(userList.filter(item => item.uid === usersItem.uid)[0]))
+        const user = userList.filter(userListItem => userListItem.uid === usersItem.uid)[0];
+        user.groups.push(group);
+        ref.update({
+            users: firebase.firestore.FieldValue.arrayRemove(clone)
+        }).catch(error=>console.log('Error when deleting user', error))
+        ref.update({
+            users:firebase.firestore.FieldValue.arrayUnion(user)
+                
+        }).catch(error => console.log('Error when adding user', error))
+    })
+    
+
+
 }
