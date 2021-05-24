@@ -10,7 +10,9 @@ import {Contener} from '../../../styledHelpers/Components';
 import {SingleInfo} from './SingleInfo';
 
 interface News {
-    text: string
+    id: string,
+    text: string,
+    createdAt: Date
 }
 
 const DIV = styled.div`
@@ -47,11 +49,18 @@ export const AboutPage: FC = () => {
     const [newsText, setNewsText] = useState<string>('');
 
     const addNews = async () => {
-        await db.collection('about').add({
+        const newsData = {
             text: newsText,
             createdAt: new Date(),
-        });
-        setNews(oldNews => [{ text: newsText }, ...oldNews])
+        };
+        const addedNews = await db.collection('about').add(newsData);
+        setNews(oldNews => [{ id: addedNews.id, ...newsData }, ...oldNews])
+    }
+
+
+    const deleteNews = async (id: string) => {
+        await db.collection('about').doc(id).delete();
+        setNews(oldNews => oldNews.filter(news => news.id !== id))
     }
 
     useEffect(() => {
@@ -60,7 +69,10 @@ export const AboutPage: FC = () => {
             if (snapshot.empty) {
                 setNews([])
             } else {
-                setNews(snapshot.docs.map(doc => doc.data()) as any)
+                setNews(snapshot.docs.map(doc => {
+                    const data = doc.data()
+                    return {id: doc.id, text: data.text, createdAt: data.createdAt}
+                }))
             }
         }
         fetchNews()
@@ -78,7 +90,7 @@ export const AboutPage: FC = () => {
                 )
             }
             {
-                news && news.map((n) => <SingleInfo text={n.text} />)
+                news && news.map((n) => <SingleInfo key={n.id} text={n.text} isAdmin={isAdmin()} id={n.id} onDelete={deleteNews}/>)
             }
             </Contener>
         </Wrapper>

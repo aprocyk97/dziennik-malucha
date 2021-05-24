@@ -12,7 +12,9 @@ import {SingleNews} from './SingleNews';
 import { db } from '../../../firebase'
 
 interface News {
-    text: string
+    id: string,
+    text: string,
+    createdAt: Date
 }
 
 const DIV = styled.div`
@@ -23,7 +25,7 @@ const DIV = styled.div`
     padding-bottom: 20px;
     padding-right: 20px;
     padding-left: 20px;
-    border-radius: 5px;
+    border-radius: 35px;
 `;
 const SearchWrapper = styled.div`
     display: flex;
@@ -52,11 +54,17 @@ export const MainPage: FC = () => {
     const [newsText, setNewsText] = useState<string>('');
 
     const addNews = async () => {
-        await db.collection('news').add({
+        const newsData = {
             text: newsText,
             createdAt: new Date(),
-        });
-        setNews(oldNews => [{ text: newsText }, ...oldNews])
+        }
+        const addedNews = await db.collection('news').add(newsData);
+        setNews(oldNews => [{ id: addedNews.id, ...newsData }, ...oldNews])
+    }
+
+    const deleteNews = async (id: string) => {
+        await db.collection('news').doc(id).delete();
+        setNews(oldNews => oldNews.filter(news => news.id !== id))
     }
 
     useEffect(() => {
@@ -65,7 +73,10 @@ export const MainPage: FC = () => {
             if (snapshot.empty) {
                 setNews([])
             } else {
-                setNews(snapshot.docs.map(doc => doc.data()) as any)
+                setNews(snapshot.docs.map(doc => {
+                    const data = doc.data()
+                    return {id: doc.id, text: data.text, createdAt: data.createdAt}
+                }))
             }
         }
         fetchNews()
@@ -86,7 +97,7 @@ export const MainPage: FC = () => {
                 )
             }<br></br>
             {
-                news && news.map((n) => <SingleNews text={n.text} />)
+                news && news.map((n) => <SingleNews key={n.id} text={n.text} isAdmin={isAdmin()} id={n.id} onDelete={deleteNews}/>)
             }
         </Contener>
     </Wrapper>

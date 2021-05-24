@@ -10,7 +10,7 @@ import {
     Link
   } from "react-router-dom";
 import {useAuth} from '../../../context/AuthContext';
-
+import SimpleSlider from './Slider';
 
 import { Colors } from '../../../styledHelpers/Colors';
 import { fontSize } from '../../../styledHelpers/FontSizes';
@@ -92,7 +92,7 @@ export const TopNavBar: FC = () => {
     return(
         
         <NavBarWrapper>
-            <Logo src={banner}/>
+            <SimpleSlider/>
             <ButtonWrapper>
                 
                     <Button to="/">Strona Główna</Button>

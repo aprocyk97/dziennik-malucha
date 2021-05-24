@@ -6,6 +6,9 @@ import people from '../../../media/icons/people.png';
 
 interface PrimitiveProps extends React.HTMLProps<HTMLDivElement>{
     text: string;
+    isAdmin: boolean;
+    id: string;
+    onDelete: (id: string) => void;
  };
 
  const DIV = styled.div`
@@ -20,6 +23,7 @@ export const SingleInfo = (props: PrimitiveProps) => {
     return(
         <DIV>
             {props.text}
+            {props.isAdmin && <button onClick={e => props.onDelete(props.id)}>🗑</button>}
         </DIV>
     );
 

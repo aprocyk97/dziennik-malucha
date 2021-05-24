@@ -12,7 +12,8 @@ const Ul = styled.div`
     padding-bottom: 20px;
     padding-right: 20px;
     padding-left: 20px;
-    border-radius: 5px;
+    border-radius: 35px;
+    text-indent: 1.5em;
 `;
 const Button = styled.img`
     //margin-left: auto;
@@ -27,14 +28,17 @@ const Button = styled.img`
 
 interface PrimitiveProps extends React.HTMLProps<HTMLDivElement>{
     text: string;
+    isAdmin: boolean;
+    id: string;
+    onDelete: (id: string) => void;
  };
 
 export const SingleNews = (props: PrimitiveProps) => {
     return(
         <div>
             <Ul>
-                {props.text}
-                <Button alt="logout" src={logout} />
+                {props.text} 
+                {props.isAdmin && <button onClick={e => props.onDelete(props.id)}>🗑</button>}
             </Ul>
             
             <br></br>
