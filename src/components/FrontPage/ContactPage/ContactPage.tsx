@@ -12,9 +12,10 @@ import {Contener} from '../../../styledHelpers/Components';
 import {SimpleInformation} from './SimpleInformation';
 
 interface Con {
-    name: string;
-    telNumber: number;
-    mailAddres: string;
+    id: string,
+    name: string,
+    telNumber: number,
+    mailAddres: string
 }
 
 const DIV = styled.div`
@@ -70,9 +71,13 @@ export const ContactPage: FC = () => {
             mailAddres: data.mailAddres,
             createdAt: new Date(),
         };
+        const addedCon = await db.collection('contact').add(newCon);
+        setContact(oldCon => [{ id: addedCon.id, ...newCon }, ...oldCon])
+    }
 
-        await db.collection('contact').add(newCon);
-        setContact(oldContact => [newCon, ...oldContact])
+    const deleteNews = async (id: string) => {
+        await db.collection('contact').doc(id).delete();
+        setContact(oldCon => oldCon.filter(news => news.id !== id))
     }
 
     useEffect(() => {
@@ -81,7 +86,10 @@ export const ContactPage: FC = () => {
             if (snapshot.empty) {
                 setContact([])
             } else {
-                setContact(snapshot.docs.map(doc => doc.data()) as any)
+                setContact(snapshot.docs.map(doc => {
+                    const data = doc.data()
+                    return {id: doc.id, name: data.name, telNumber: data.telNumber, mailAddres: data.mailAddres}
+                }))
             }
         }
         fetchContact()
@@ -111,7 +119,7 @@ export const ContactPage: FC = () => {
                 )
             }
             {
-                contact && contact.map((con) => <SimpleInformation {...con} />)
+                contact && contact.map((con) => <SimpleInformation key={con.id} name={con.name} telNumber={con.telNumber} mailAddres={con.mailAddres} isAdmin={isAdmin()} id={con.id} onDelete={deleteNews}/>)
             }
             </Contener>
         </Wrapper>

@@ -18,7 +18,7 @@ const Logo = styled.img`
     max-width: 100%;
     height: 300px;
     margin: 0;
-    object-position:  30% 40%;
+    object-position:  0% 39%;
     position: relative;
     object-fit: cover;
     

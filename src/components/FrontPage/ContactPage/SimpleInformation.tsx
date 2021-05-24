@@ -3,13 +3,6 @@ import styled from 'styled-components';
 
 import people from '../../../media/icons/people.png';
 
-
-interface ContactProps extends React.HTMLProps<HTMLDivElement>{
-    name: string;
-    telNumber: number;
-    mailAddres: string;
- };
-
 const Wrapper = styled.div`
     border: 1px solid black;
     background: lightgray;
@@ -47,10 +40,23 @@ const Img = styled.img`
         margin: 0 0.5vw;
     }
 `;
-interface PrimitiveProps extends React.HTMLProps<HTMLDivElement>{
-    text: string;
- };
+ 
+const DeleteButton = styled.div`
+    width: 20px;
+    height: 100%;
+    float: right;
+    padding-right: 20px;
+`;
 
+
+interface ContactProps extends React.HTMLProps<HTMLDivElement>{
+    name: string;
+    telNumber: number;
+    mailAddres: string;
+    isAdmin: boolean;
+    id: string;
+    onDelete: (id: string) => void;
+ };
 
 export const SimpleInformation = (props: ContactProps) => {
 
@@ -60,6 +66,10 @@ export const SimpleInformation = (props: ContactProps) => {
             <Name>Imię i Nazwisko: {props.name}</Name>
             <Tel>Numer telefonu: {props.telNumber}</Tel>
             <Mail>Adress e-mail: {props.mailAddres}</Mail>
+            <DeleteButton>
+                {props.isAdmin && <button onClick={e => props.onDelete(props.id)}>🗑</button>}
+            </DeleteButton>
+            
         </Wrapper>
     );
 

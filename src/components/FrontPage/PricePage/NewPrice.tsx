@@ -29,6 +29,9 @@ interface FeeProps extends React.HTMLProps<HTMLDivElement>{
     priceValue: number;
     pricePeriod: string;
     additionalInfo: string;
+    isAdmin: boolean;
+    id: string;
+    onDelete: (id: string) => void;
  };
 
  const trasformPeriod = (pricePeriod: string) => {
@@ -48,6 +51,7 @@ export const NewPrice = (props: FeeProps) => {
             <B>Pakiet:</B> {props.name}
             <B>Cena:</B> {props.priceValue}zł/{trasformPeriod(props.pricePeriod)} <br></br><br></br>
             <B>Informacje:</B> {props.additionalInfo}<br></br><br></br>
+            {props.isAdmin && <button onClick={e => props.onDelete(props.id)}>🗑</button>}
         </Wrapper>
     );
 

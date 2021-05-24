@@ -23,6 +23,12 @@ const Button = styled.img`
         margin: 0 0.5vw;
     }
 `;
+const DeleteButton = styled.div`
+    width: 20px;
+    height: 100%;
+    float: right;
+    padding-right: 20px;
+`;
 
 
 
@@ -38,7 +44,10 @@ export const SingleNews = (props: PrimitiveProps) => {
         <div>
             <Ul>
                 {props.text} 
-                {props.isAdmin && <button onClick={e => props.onDelete(props.id)}>🗑</button>}
+                <DeleteButton>
+                    {props.isAdmin && <button onClick={e => props.onDelete(props.id)}>🗑</button>}
+                </DeleteButton>
+                
             </Ul>
             
             <br></br>

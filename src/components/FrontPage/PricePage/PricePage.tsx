@@ -11,10 +11,11 @@ import {Contener} from '../../../styledHelpers/Components';
 import {NewPrice} from './NewPrice';
 
 interface Fee {
-    name: string;
-    priceValue: number;
-    pricePeriod: string;
-    additionalInfo: string;
+    id: string,
+    name: string,
+    priceValue: number,
+    pricePeriod: string,
+    additionalInfo: string
 }
 
 const DIV = styled.div`
@@ -79,9 +80,13 @@ export const PricePage: FC = () => {
             additionalInfo: data.additionalInfo,
             createdAt: new Date(),
         };
+        const addedFees = await db.collection('fees').add(newFee);
+        setFees(oldFees => [{ id: addedFees.id, ...newFee }, ...oldFees])
+    }
 
-        await db.collection('fees').add(newFee);
-        setFees(oldFees => [newFee, ...oldFees])
+    const deleteNews = async (id: string) => {
+        await db.collection('fees').doc(id).delete();
+        setFees(oldFees => oldFees.filter(news => news.id !== id))
     }
 
     useEffect(() => {
@@ -90,7 +95,10 @@ export const PricePage: FC = () => {
             if (snapshot.empty) {
                 setFees([])
             } else {
-                setFees(snapshot.docs.map(doc => doc.data()) as any)
+                setFees(snapshot.docs.map(doc => {
+                    const data = doc.data()
+                    return {id: doc.id, name: data.name, priceValue: data.priceValue, pricePeriod: data.pricePeriod, additionalInfo: data.additionalInfo}
+                }))
             }
         }
         fetchFees()
@@ -126,7 +134,7 @@ export const PricePage: FC = () => {
                 )
             }
             {
-                fees && fees.map((fee) => <NewPrice {...fee} />)
+                fees && fees.map((fee) => <NewPrice key={fee.id} name={fee.name} priceValue={fee.priceValue} pricePeriod={fee.pricePeriod} additionalInfo={fee.additionalInfo} isAdmin={isAdmin()} id={fee.id} onDelete={deleteNews}/>)
             }
             </Contener>
         </Wrapper>

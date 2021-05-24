@@ -17,13 +17,23 @@ interface PrimitiveProps extends React.HTMLProps<HTMLDivElement>{
     font-size: 20px;
  `;
 
+const DeleteButton = styled.div`
+    width: 20px;
+    height: 100%;
+    float: right;
+    padding-right: 20px;
+`;
+
 
 export const SingleInfo = (props: PrimitiveProps) => {
 
     return(
         <DIV>
             {props.text}
-            {props.isAdmin && <button onClick={e => props.onDelete(props.id)}>🗑</button>}
+            <DeleteButton>
+                {props.isAdmin && <button onClick={e => props.onDelete(props.id)}>🗑</button>}  
+            </DeleteButton>
+            
         </DIV>
     );
 
