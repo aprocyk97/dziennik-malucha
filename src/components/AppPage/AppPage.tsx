@@ -26,8 +26,7 @@ export const AppPage: FC = () => {
 
     return (
         <AuthProvider>
-            
-
+            <UserProvider>
                 <Wrapper>
                     <Router>
                         <Switch>
@@ -46,7 +45,7 @@ export const AppPage: FC = () => {
 
                 </Wrapper>
 
-            
+                </UserProvider>
         </AuthProvider>
     );
 
