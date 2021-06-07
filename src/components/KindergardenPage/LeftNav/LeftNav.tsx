@@ -18,7 +18,7 @@ import { DropdownButton } from './DropdownButton';
 const NavWrapper = styled.div`
     
     min-height: 100vh;
-    width: 20vw;
+    min-width: 20vw;
     background-color: ${Colors.borderGreen};
     display: flex;
     flex-direction: column;
@@ -116,6 +116,7 @@ export const LeftNav: FC = () => {
                 :
                     null
             }
+            <NavButton to={`${match!.url}/profil-dziecka`}> Profil Dziecka </NavButton>
            
             <NavButton to={`/`}>  Powrót </NavButton>
         </NavWrapper>

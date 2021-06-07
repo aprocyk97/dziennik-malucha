@@ -18,6 +18,7 @@ import { KindergardenMeals } from './KindergardenMeals/KindergardenMeals';
 import { isAdmin, issAdmin } from '../../action/fetchKindergarden';
 import { KindergardenAdminRoute } from '../common/KindergardenAdminRoute';
 import { KindergardenGroupsPage } from './KindergardenGroupsPage/KindergardenGroupsPage';
+import { KindergardenKidsProfile } from './KindergardenKidsProfile/KindergardenKidsProfile';
 
 
 const Wrapper = styled.div`
@@ -45,7 +46,6 @@ export const KindergardenPage: FC = () => {
         <Wrapper>
 
             <LeftNav />
-
             <Switch>
                 <Route exact path={`${match!.path}/strona-glowna`}>
                     <KindergardenHomePage />
@@ -68,6 +68,9 @@ export const KindergardenPage: FC = () => {
                 </Route>
                 <Route path={`${match!.path}/${getKindergardenGroup()}`}>
                     <KindergardenGroupsPage />
+                </Route>
+                <Route path={`${match!.path}/profil-dziecka`}>
+                    <KindergardenKidsProfile />
                 </Route>
             </Switch>
         </Wrapper>

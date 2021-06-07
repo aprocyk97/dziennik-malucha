@@ -323,6 +323,7 @@ export const addUsersGroup = async(kindergarden: string, users: IGroupUser[], gr
         const clone = JSON.parse(JSON.stringify(userList.filter(item => item.uid === usersItem.uid)[0]))
         const user = userList.filter(userListItem => userListItem.uid === usersItem.uid)[0];
         user.groups.push(group);
+        
         ref.update({
             users: firebase.firestore.FieldValue.arrayRemove(clone)
         }).catch(error=>console.log('Error when deleting user', error))

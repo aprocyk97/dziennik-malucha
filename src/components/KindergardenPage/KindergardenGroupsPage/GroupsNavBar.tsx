@@ -20,8 +20,9 @@ const NavButton = styled(Link)`
     padding: 1vh 1vw;
 
     color: white;
-    height: 100%;
+    max-height: 100%;
     cursor: pointer;
+    z-index: 2;
 `;
 
 export const GroupsNavBar: FC = () => {
@@ -36,6 +37,7 @@ export const GroupsNavBar: FC = () => {
             <NavButton to={`${match!.url}/aktualnosci`}>Aktualności grupy</NavButton>
             <NavButton to={`${match!.url}/obecnosc`}>Lista obecności</NavButton>
             <NavButton to={`${match!.url}/uzytkownicy`}>Lista użytkowników</NavButton>
+            <NavButton to={`${match!.url}/dodaj-aktualnosci`}>Dodaj Aktualności</NavButton>
 
 
         </NavWrapper>
