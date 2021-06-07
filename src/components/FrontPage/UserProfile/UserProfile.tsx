@@ -55,7 +55,7 @@ export const UserProfile:FC = () => {
     
 
     const {logout, getUser} = useAuth();
-    const {setKindergarden, getKindergardenUser} = useKindergarden();
+    const {setKindergarden, getKindergardenUser, setKindergardenName} = useKindergarden();
     const history = useHistory();
     const userRef = db.collection('users').doc(getUser());
     let match = useRouteMatch('/dziennik-malucha');
@@ -141,6 +141,7 @@ export const UserProfile:FC = () => {
                             to={`/${value?.id}/strona-glowna`} 
                             onClick={() => {
                                 setKindergarden(value.id);
+                                setKindergardenName(value.name);
                             }} 
                         >
                             {value.name}

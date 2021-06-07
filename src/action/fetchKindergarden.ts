@@ -1,6 +1,54 @@
 
 import firebase from 'firebase'
 import {db} from '../firebase';
+import kindergardenReducers from '../reducers/kindergardenReducers';
+
+
+export interface Users  {
+    power: string;
+    uid: string;
+    groups: IKindergardenGroup[];
+}
+
+export type KindergardenUser = {
+    email: string;
+    name: string;
+    surname: string;
+    kindergardens: any[];
+    uid: string;
+    power: string;
+}
+
+export type PageUser = {
+    email: string;
+    name: string;
+    surname: string;
+    kindergardens: any[];
+    uid: string;
+}
+
+export interface ISingleMeal {
+    meal: string;
+    amount: string;
+    allergens: string[];
+}
+
+export interface IDayMeals {
+    breakfast: ISingleMeal[];
+    dinner: ISingleMeal[];
+    teatime: ISingleMeal[];
+    id: string;
+}
+export interface IDayMealsData {
+    breakfast: ISingleMeal[];
+    dinner: ISingleMeal[];
+    teatime: ISingleMeal[];
+}
+export interface IKindergardenGroup {
+    name: string;
+    id: string;
+}
+
 
 
 export const fetchKindergardenUsers = async(currentKindergarden: string) => {
@@ -20,11 +68,6 @@ export const fetchKindergardenUsers = async(currentKindergarden: string) => {
     
 };
 
-export type Users = {
-    power: string;
-    uid: string;
-}
-
 export const fetchUserList = async (kindergarden: string): Promise<Users[]> => {
     
     const ref = db.collection('kindergardens').doc(kindergarden);
@@ -36,15 +79,6 @@ export const fetchUserList = async (kindergarden: string): Promise<Users[]> => {
     })
     userList = doc!.users;
     return userList;
-}
-
-export type KindergardenUser = {
-    email: string;
-    name: string;
-    surname: string;
-    kindergardens: any[];
-    uid: string;
-    power: string;
 }
 
 export const fetchUserData = async (userList: Users[]): Promise<KindergardenUser[]> => {
@@ -80,6 +114,7 @@ export const fetchUserData = async (userList: Users[]): Promise<KindergardenUser
     })
     return temp;
 }
+
     // TODO: ALSO SHOULD DELETE KINDERGARDEN RELATION IN PAGE USERS TAB
 export const removeKindergardenUser = async(uid: string, kindg: string): Promise<any> => {
     const ref = db.collection('kindergardens').doc(kindg);
@@ -99,14 +134,6 @@ export const removeKindergardenUser = async(uid: string, kindg: string): Promise
     }
 }
 
-export type PageUser = {
-    email: string;
-    name: string;
-    surname: string;
-    kindergardens: any[];
-    uid: string;
-}
-
 export const getUsers = async(): Promise<PageUser[]> => {
     const ref = db.collection('users');
     let tempUserData = Array();
@@ -123,44 +150,33 @@ export const getUsers = async(): Promise<PageUser[]> => {
     })
     return tempUserData;
 }
+
     // TODO: ALSO SHOULD ADD KINDERGARDEN RELATION IN PAGE USERS TAB
-export const addKindergardenUser = async(email: string, userPower:string, kindg: string): Promise<any> => {
+export const addKindergardenUser = async(email: string, userPower:string, kindg: string, kindgName: string): Promise<any> => {
     const kindergardenRef = db.collection('kindergardens').doc(kindg);
     const usersL = await getUsers();
     let exist = false;
-    
-    const t = usersL.map(item => {
+
+    const t = usersL.filter(item => {
         if(item.email === email){
             exist = true;
             return item;
         }
     })
-    
 
     if(exist){
         await kindergardenRef.update({
             users: firebase.firestore.FieldValue.arrayUnion({power: userPower , uid: t[0]?.uid})
+        }).catch(error => {
+            console.log('User add error:',error);
+        })
+        await db.collection('users').doc(t[0].uid).update({
+            kindergardens: firebase.firestore.FieldValue.arrayUnion({id: kindg, name: kindgName})
         })
     }else{
         console.log('Current user does not exist in database');
     }
     
-
-
-}
-
-
-export interface ISingleMeal {
-    meal: string;
-    amount: string;
-    allergens: string[];
-}
-
-export interface IDayMeals {
-    breakfast: ISingleMeal[];
-    dinner: ISingleMeal[];
-    teatime: ISingleMeal[];
-    id: string;
 }
 
 export const getMeals = async(kindergarden: string): Promise<IDayMeals[]> => {
@@ -179,4 +195,144 @@ export const getMeals = async(kindergarden: string): Promise<IDayMeals[]> => {
     })
 
     return arr;
+}
+
+export const sendMeals = async(kindergarden: string, meals: IDayMealsData, id: string): Promise<any> => {
+    const ref = db.collection('kindergardens').doc(kindergarden).collection('data').doc('meals');
+    let dataObj = {};
+    dataObj[id] = meals;
+    console.log(dataObj);
+    await ref.set(dataObj, {merge: true})
+        .catch(error => {
+            console.log('Error when sending meals to database: ', error);
+        });
+}
+
+export const deleteUserKindergarden = async(uid: string, kindergarden: string, kindergardenName: string) : Promise<any> => {
+    const ref = db.collection('users').doc(uid);
+    await ref.update({
+        kindergardens: firebase.firestore.FieldValue.arrayRemove({id: kindergarden, name: kindergardenName})
+    }).catch(error => {
+        console.log('Error when deleting users kindergardenReducers', error);
+    })
+}
+
+
+
+export const isAdmin = async(uid: string, kindergarden: string): Promise<any> => {
+    const ref = db.collection('kindergardens').doc(kindergarden);
+
+    let result: boolean = false;
+
+    const obj = await ref.get().then(doc => {
+        if(doc.exists){
+            return doc.data();
+        }else{
+            console.log('Object doesnt exist');
+            result = false;
+        }
+    }).catch(error => {
+        console.log('Error when fetching data', error);
+        result = false;
+    })
+
+    if( obj !== undefined){
+        obj.users.map(item => {
+            (item.uid === uid) ?
+                item.power === 'admin' ? result = true : result = false
+                :
+                result = false
+            
+        })
+    }
+    return result;
+    
+}
+export const issAdmin = async(uid:string, kindergarden: string): Promise<any> => {
+    console.log(await fetchUserByUid(uid, kindergarden));
+    const user = await fetchUserByUid(uid, kindergarden);
+    return user.power === 'admin';
+
+    
+}
+
+
+// TODO: CLEAN FETCHES !!!
+
+
+export const fetchUserGroups = async(uid: string, kindergarden: string): Promise<IKindergardenGroup[]> => {
+    let users = fetchUserList(kindergarden);
+
+    const user = (await users).filter(item => item.uid === uid);
+    return user[0]!.groups;
+
+}
+export const fetchUserByUid = async(uid: string, kindergarden: string): Promise<Users> => {
+    const users = fetchUserList(kindergarden);
+
+    const user = (await users).filter(item => item.uid === uid);
+    return user[0];
+}
+export const fetchUserByPower = async(power: string, kindergarden: string): Promise<KindergardenUser[]> => {
+
+    const users = fetchUserData(await fetchUserList(kindergarden))
+
+    return (await users).filter(item => item.power === power);
+
+}
+
+export interface IKindergardenGroups {
+    id: string;
+    name: string;
+    users: IGroupUser[];
+}
+export interface IGroupUser{
+    uid: string;
+    name: string;
+    surname: string;
+}
+export const CreateKindergardenGroup = async(kindergarden: string, group: IKindergardenGroups ) => {
+    const ref = db.collection('kindergardens').doc(kindergarden).collection('groups');
+    const groupUsers: IGroupUser[] = group.users;
+    const adminList = fetchUserByPower('admin',kindergarden);
+    (await adminList).map(item => {
+        groupUsers.push({
+            uid: item.uid,
+            name: item.name,
+            surname: item.surname
+        })
+    })
+
+    await ref.doc(group.id).set({
+        id: group.id,
+        name: group.name,
+        users: groupUsers
+    })
+        .catch(error => console.log('Error when creating group', error))
+        .finally(()=>{
+            addUsersGroup(kindergarden, groupUsers, {id: group.id, name: group.name})
+                .catch(error => console.log('Error when adding group users', error));
+        });
+}
+
+export const addUsersGroup = async(kindergarden: string, users: IGroupUser[], group: IKindergardenGroup) => {
+    const ref= db.collection('kindergardens').doc(kindergarden);
+    const userList = await fetchUserList(kindergarden);
+    users.map(usersItem => {
+        
+        const clone = JSON.parse(JSON.stringify(userList.filter(item => item.uid === usersItem.uid)[0]))
+        const user = userList.filter(userListItem => userListItem.uid === usersItem.uid)[0];
+        user.groups.push(group);
+        
+        ref.update({
+            users: firebase.firestore.FieldValue.arrayRemove(clone)
+        }).catch(error=>console.log('Error when deleting user', error))
+        ref.update({
+            users:firebase.firestore.FieldValue.arrayUnion(user)
+                
+        }).catch(error => console.log('Error when adding user', error))
+    })
+    
+
+
 }

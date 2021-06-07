@@ -25,8 +25,10 @@ export const KindergardenProvider: FC = ({children}) => {
 
     const [loading, setLoading] = useState<Boolean>(true);
     const [currentKindergarden, setCurrentKindergarden] = useState<string>();
+    const [currentKindergardenName, setCurrentKindergardenName] = useState<string>();
     const [currentKindergardenUser, setCurrentKindergardenUser] = useState<string>();
-    const [kindergardenUserPower, setKindergardenUserPower] = useState<string>();
+    const [currentKindergardenGroup, setCurrentKindergardenGroup] = useState<string>();
+    const [isUserAdmin, setIsUserAdmin] = useState<boolean>();
 
     const [currentUserPowers, setCurrentUserPowers] = useState<IKindergardenUser>();
     
@@ -37,11 +39,37 @@ export const KindergardenProvider: FC = ({children}) => {
     function getKindergarden(){
         return currentKindergarden;
     }
+
+
     function setKindergardenUser(user: string){
         setCurrentKindergardenUser(user);
     }
     function getKindergardenUser(){
         return currentKindergardenUser;
+    }
+
+
+    function setKindergardenName(name: string){
+        setCurrentKindergardenName(name);
+    }
+    function getKindergardenName(){
+        return currentKindergardenName;
+    }
+
+
+    function setKindergardenGroup(id: string){
+        setCurrentKindergardenGroup(id);
+    }
+    function getKindergardenGroup(){
+        return currentKindergardenGroup;
+    }
+
+
+    function setIsAdmin(state: boolean){
+        setIsUserAdmin(state);
+    }
+    function getIsAdmin(){
+        return isUserAdmin;
     }
 
 
@@ -52,41 +80,13 @@ export const KindergardenProvider: FC = ({children}) => {
         }
     }
 
-    async function  userSet(){
-
-        const ref = db.collection('kindergardens').doc(currentKindergarden);
-        
-
-        const data = await ref.get().then(doc =>{
-            if(doc.exists){
-                return doc.data();
-                
-            } else {
-                console.log('Cannot get data from server!')
-            }
-        }).catch(error => {
-            console.log('Kindergarden Database error: ', error);
-        })
-        
-        const users: IUsers[] = Object.values(data!['users']);
-        users.map(items => {
-            if(items.uid === currentKindergardenUser){
-                setCurrentUserPowers({
-                    uid: items.uid,
-                    power: items.power,
-                    kindergardenId: currentKindergarden!
-                })
-            }
-        })
-        
-        
-    }
-
 
 
     useEffect(() => {
         setKindergarden(window.localStorage.getItem('currentKindergarden') || 'currentKindergarden');
         setKindergardenUser(window.localStorage.getItem('currentKindergardenUser') || 'currentKindergardenUser');
+        setKindergardenName(window.localStorage.getItem('currentKindergardenName') || 'currentKindergardenName');
+        setKindergardenGroup(window.localStorage.getItem('currentKindergardenGroup') || 'currentKindergardenGroup');
         setLoading(false);
     }, [])
 
@@ -102,12 +102,31 @@ export const KindergardenProvider: FC = ({children}) => {
         return setLocalStorage('currentKindergardenUser', currentKindergardenUser)
     }, [currentKindergardenUser])
 
+    useEffect(() => {
+        console.log('current name', currentKindergardenName);
+
+        return setLocalStorage('currentKindergardenName', currentKindergardenName)
+    }, [currentKindergardenName])
+
+    useEffect(() => {
+        console.log('current group', currentKindergardenGroup);
+
+        return setLocalStorage('currentKindergardenGroup', currentKindergardenGroup)
+    }, [currentKindergardenGroup])
+
+
 
     const value = {
         setKindergarden,
         getKindergarden,
         setKindergardenUser,
-        getKindergardenUser, 
+        getKindergardenUser,
+        setKindergardenName,
+        getKindergardenName, 
+        setIsAdmin,
+        getIsAdmin,
+        setKindergardenGroup,
+        getKindergardenGroup,
     }
 
 

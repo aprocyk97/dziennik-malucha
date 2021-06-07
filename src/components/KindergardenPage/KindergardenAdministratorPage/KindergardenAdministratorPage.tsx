@@ -12,8 +12,9 @@ import { useKindergarden } from '../../../context/KindergardenContext';
 import { fontSize } from '../../../styledHelpers/FontSizes';
 import { AdminFeed } from './AdminFeed/AdminFeed';
 import { AdminUsersList } from './AdminUsersList/AdminUsersList';
-import { AdminAddUser } from './AdminAddUser/AdminAddUser';
+
 import { AdminAddMeal } from './AdminAddMeal/AdminAddMeal';
+import { AdminAddGroup } from './AdminAddGroup/AdminAddGroup';
 
 
 const Wrapper = styled.div`
@@ -72,7 +73,7 @@ export const KindergardenAdministratorPage: FC = () => {
             <AdminNav>
                 <NavButton to={`${match!.url}/add-feed`}> Dodaj Aktualności </NavButton>
                 <NavButton to={`${match!.url}/edit-meals`}> Edytuj Jadłospis </NavButton>
-                <NavButton to={`${match!.url}/add-user`}> Dodaj użytkownika </NavButton>
+                <NavButton to={`${match!.url}/add-group`}> Dodaj Grupę </NavButton>
                 <NavButton to={`${match!.url}/user-list`}> Lista użytkowników przedszkola </NavButton>
             </AdminNav>
             <AdminContent>
@@ -84,8 +85,8 @@ export const KindergardenAdministratorPage: FC = () => {
                     <Route path={`${match!.path}/user-list`}>
                         <AdminUsersList />
                     </Route>
-                    <Route path={`${match!.path}/add-user`}>
-                        <AdminAddUser />
+                    <Route path={`${match!.path}/add-group`}>
+                        <AdminAddGroup />
                     </Route>
                     <Route path={`${match!.path}/edit-meals`}>
                         <AdminAddMeal />
