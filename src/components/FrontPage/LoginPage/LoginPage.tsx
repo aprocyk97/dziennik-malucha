@@ -20,10 +20,9 @@ import
 } from '../../../styledHelpers/LoginFormStyling';
 
 
-
 export const LoginPage:FC = () => {
 
-    
+
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
