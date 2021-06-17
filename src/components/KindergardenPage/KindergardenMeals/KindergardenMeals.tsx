@@ -17,8 +17,8 @@ export const KindergardenMeals: FC = () => {
 
 
     const { getKindergarden } = useKindergarden();
-    const [meals, setMeals] = useState<IDayMeals[]>();
-    
+    const [meals, setMeals] = useState<IDayMeals[]>([]);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,11 +31,10 @@ export const KindergardenMeals: FC = () => {
     return (
         <Wrapper>
 
-            {console.log(meals)}
             {
-            meals?.map(item => {
-                return <DayDrodown data={item} />
-            })}
+                meals.map(item => {
+                    return <DayDrodown data={item} />
+                })}
 
         </Wrapper>
     )

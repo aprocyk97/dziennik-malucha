@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useKindergarden } from '../../context/KindergardenContext';
 import { Colors } from '../../styledHelpers/Colors';
 import { fontSize } from '../../styledHelpers/FontSizes';
+import { ISingleArticle } from '../KindergardenPage/KindergardenFeed/KindergardenFeed';
 
 const PostWrapper = styled.div`
 
@@ -81,16 +82,20 @@ const PostImage = styled.img`
 interface ISinglePost {
     fullPost: boolean;
     setPostPath: any;
+    postPath: string;
+    newsFeedPath: string;
+    articleItem: ISingleArticle;
+    setDisplayPost?: any;
 }
 
 export const SinglePost: FC<ISinglePost> = (props) => {
 
     const [loading, setLoading] = useState<boolean>(true);
 
-    const [postPath, setPostPath] = useState<string>('aiii');
+    const [postPath, setPostPath] = useState<string>(props.articleItem.title);
 
-    const [text, setText] = useState<string>('Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa molestiae optio cumque repellat dicta possimus fugiat consectetur, sed magni rem, ducimus nostrum, quidem laborum iure vitae molestias et ab. Sint!Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa molestiae optio cumque repellat dicta possimus fugiat consectetur, sed magni rem, ducimus nostrum, quidem laborum iure vitae molestias et ab. Sint!Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa molestiae optio cumque repellat dicta possimus fugiat consectetur, sed magni rem, ducimus nostrum, quidem laborum iure vitae molestias et ab. Sint!Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa molestiae optio cumque repellat dicta possimus fugiat consectetur, sed magni rem, ducimus nostrum, quidem laborum iure vitae molestias et ab. Sint!Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa molestiae optio cumque repellat dicta possimus fugiat consectetur, sed magni rem, ducimus nostrum, quidem laborum iure vitae molestias et ab. Sint!Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa molestiae optio cumque repellat dicta possimus fugiat consectetur, sed magni rem, ducimus nostrum, quidem laborum iure vitae molestias et ab. Sint!Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa molestiae optio cumque repellat dicta possimus fugiat consectetur, sed magni rem, ducimus nostrum, quidem laborum iure vitae molestias et ab. Sint!Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa molestiae optio cumque repellat dicta possimus fugiat consectetur, sed magni rem, ducimus nostrum, quidem laborum iure vitae molestias et ab. Sint!Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa molestiae optio cumque repellat dicta possimus fugiat consectetur, sed magni rem, ducimus nostrum, quidem laborum iure vitae molestias et ab. Sint!Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa molestiae optio cumque repellat dicta possimus fugiat consectetur, sed magni rem, ducimus nostrum, quidem laborum iure vitae molestias et ab. Sint!');
-    const [cutText, setCutText] = useState<String>(text.slice(0, 1200))
+    const [text, setText] = useState<string>('');
+    const [cutText, setCutText] = useState<String>('')
 
     const postRef = useRef<HTMLDivElement>(null);
 
@@ -98,45 +103,56 @@ export const SinglePost: FC<ISinglePost> = (props) => {
         const cutText = text.slice(0, 1200);
         return cutText
     }
-    
 
 
-    const {getKindergardenGroup, getKindergarden } = useKindergarden();
 
-    let match = useRouteMatch(`/${getKindergarden()}/${getKindergardenGroup()}/aktualnosci`);
+    const { getKindergardenGroup, getKindergarden } = useKindergarden();
+
+    let match = useRouteMatch(props.newsFeedPath);
 
     return (
+
         <PostWrapper ref={postRef}>
             <PostImage />
             <PostTitle>
-                Post Title
+                {props.articleItem.title}
             </PostTitle>
             <PostInfo>
                 <p>
                     Dodano przez: User
-                </p>
+                            </p>
                 <p>
-                    Data dodania: Date
+                    Data dodania: {props.articleItem.displayDate}
                 </p>
             </PostInfo>
 
             <PostText>
                 {props.fullPost
                     ?
-                    text
+                    <>
+                        {props.articleItem.content}
+
+                    </>
                     :
                     <>
-                        {cutText}
-                        <TextLink onClick={() => {
-                            props.setPostPath(postPath)
-                        }} to={`${match?.url}/${postPath}`}>... Czytaj dalej</TextLink>
+
+                        {props.articleItem.content.slice(0, 1200)}
+                        {
+                            props.articleItem.content.length > 1200 ?
+                            <TextLink onClick={() => {
+                                props.setPostPath(postPath)
+                                props.setDisplayPost(props.articleItem);
+                            }} to={`${match?.url}/${postPath}`}>... Czytaj dalej
+                            </TextLink>
+                            :
+                            null
+                        }
+                        
                     </>
                 }
 
             </PostText>
-
-
-
         </PostWrapper>
+
     )
 }

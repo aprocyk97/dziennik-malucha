@@ -7,13 +7,13 @@ export const Wrapper = styled.div`
     /* border: 1px solid ${Colors.borderGreen}; */
     border-radius: 25px;
 
-    box-shadow:0px 0px 40px ${Colors.borderGreen};
+    box-shadow:0px 0px 5px 2px ${Colors.borderGreen};
 
     
 
-    margin: 15vh 35vw;
-    width:25vw;
-    min-width: 300px;
+    margin: 15vh 30vw;
+    width:40vw;
+    
 
     background-color: #FFFF;
 
@@ -36,7 +36,7 @@ export const Form = styled.form`
 export const LoginInput = styled.input`
     
     height: 3.5vh;
-    width: 400px;
+    width: 30vw;
 
     font-size: ${fontSize[20]};
 
@@ -76,7 +76,7 @@ export const LoginButton = styled.button`
 
     box-shadow:10px 10px 30px ${Colors.borderGreen} inset;
 
-    /* border: 2px solid; */
+    border: 2px solid gray;
     border-radius: 5px;
     
     font-weight: bold;
@@ -88,6 +88,8 @@ export const LoginButton = styled.button`
     
     &:active{
         border-style: outset !important;
+        border: 1px solid gray;
+        transform: translate(-1px,-1px);
         
     }
     &:focus{

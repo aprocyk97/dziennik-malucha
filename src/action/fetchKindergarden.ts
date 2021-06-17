@@ -38,6 +38,7 @@ export interface IDayMeals {
     dinner: ISingleMeal[];
     teatime: ISingleMeal[];
     id: string;
+    date: string;
 }
 export interface IDayMealsData {
     breakfast: ISingleMeal[];
@@ -197,10 +198,10 @@ export const getMeals = async(kindergarden: string): Promise<IDayMeals[]> => {
     return arr;
 }
 
-export const sendMeals = async(kindergarden: string, meals: IDayMealsData, id: string): Promise<any> => {
+export const sendMeals = async(kindergarden: string, meals: IDayMealsData, id: string, date:string): Promise<any> => {
     const ref = db.collection('kindergardens').doc(kindergarden).collection('data').doc('meals');
     let dataObj = {};
-    dataObj[id] = meals;
+    dataObj[id] = {...meals, date};
     console.log(dataObj);
     await ref.set(dataObj, {merge: true})
         .catch(error => {

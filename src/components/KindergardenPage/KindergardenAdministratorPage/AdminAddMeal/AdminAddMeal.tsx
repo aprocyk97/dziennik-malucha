@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { getMeals, IDayMealsData, sendMeals } from '../../../../action/fetchKindergarden';
 import { useKindergarden } from '../../../../context/KindergardenContext';
 import { AddMeal } from './AddMeal';
+import { MealPopup } from './MealPopup';
 
 const Wrapper = styled.div`
     margin: 2vh 0;
@@ -58,13 +59,28 @@ export const AdminAddMeal: FC = () => {
     const [dinnerList, setDinnerList] = useState<SingleMeal[]>([{ meal: '', amount: '', allergens: [''] }]);
     const [teatimeList, setTeatimeList] = useState<SingleMeal[]>([{ meal: '', amount: '', allergens: [''] }]);
     const [mealDate, setMealDate] = useState<Date>(new Date());
+    const [isFullifiled, setIsFullifiled] = useState<string>('');
+    const [popout, setPopout] = useState<any>();
+
+
+    const popupTimeout = () => {
+        
+        return popout;      
+    }
+    useEffect(() => {
+        if(popout !== null){
+            setTimeout(() => {setPopout(null)},3000);
+            console.log('timeout');
+        }
+    }, [popout])
 
 
     const handleSend = async () => {
-        
+
         let id = `${mealDate.getDate()}${mealDate.getMonth()}${mealDate.getFullYear()}`;
-        console.log('after mergE:', mergeMeals());
-        await sendMeals(getKindergarden(), mergeMeals(), id);
+        await sendMeals(getKindergarden(), mergeMeals(), id, JSON.stringify(mealDate))
+            // .then(() => { setIsFullifiled('fullifiled') }, () => { setIsFullifiled('rejected') });
+            .then(() => {setPopout(<MealPopup message='Zapytanie zostało wysłane' />)}, () => {setPopout(<MealPopup message='Zapytanie zostało odrzucone. Spróbuj ponownie za chwilę' />)})
     }
     const mergeMeals = () => {
         return { breakfast: breakfastList, dinner: dinnerList, teatime: teatimeList };
@@ -95,6 +111,12 @@ export const AdminAddMeal: FC = () => {
 
     return (
         <Wrapper>
+
+
+            {popout}
+
+
+
             <input type='date' onChange={e => {
                 setMealDate(e.target.valueAsDate!);
             }} />
