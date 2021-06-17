@@ -130,7 +130,7 @@ export const RegisterPage:FC = () => {
             </Form>
 
             <AdditionalLinks>
-                <p>Masz już konto? <Link to="/login">Zaloguj się</Link></p>
+                <p>Masz już konto? <Link to={`${match?.url}/login`}>Zaloguj się</Link></p>
             </AdditionalLinks>
         </Wrapper>
         </div>

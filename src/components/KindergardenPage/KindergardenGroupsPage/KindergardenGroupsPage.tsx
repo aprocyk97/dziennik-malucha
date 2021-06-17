@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { useKindergarden } from '../../../context/KindergardenContext';
 import { GroupsAddPost } from './GroupsAddPost/GroupsAddPost';
 import Test from './GroupsAddPost/Test';
+import { GroupsAttendanceList } from './GroupsAttendanceList/GroupsAttendanceList';
+
 import { GroupsNavBar } from './GroupsNavBar';
 import { GroupsPosts } from './GroupsPosts/GroupsPosts';
 
@@ -28,8 +30,11 @@ export const KindergardenGroupsPage: FC = () => {
                     <GroupsPosts />
                 </Route>
                 <Route path={`${match!.path}/dodaj-aktualnosci`}>
-                    <Test />
+                    <GroupsAddPost />
                     
+                </Route >
+                <Route path={`${match!.path}/obecnosc`}>
+                    <GroupsAttendanceList />
                 </Route>
             </Switch>
             

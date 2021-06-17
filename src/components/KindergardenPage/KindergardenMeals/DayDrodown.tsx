@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import styled from 'styled-components';
 import useDropdown from 'react-dropdown-hook';
 import { IDayMeals } from '../../../action/fetchKindergarden';
@@ -73,11 +73,23 @@ interface IDayDropdown {
 
 export const DayDrodown: FC<IDayDropdown> = (props) => {
 
-    const [wrapperRef, dropdownOpen, toggleDropdown, closeDropdown] = useDropdown();
+    const dayOfWeek = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
+    
+
+    const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+    const [mealDate, setMealDate] = useState<Date>(new Date(JSON.parse(props.data.date)));
+
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    }
+
     return (
-        <DropdownWrapper ref={wrapperRef}>
+        <DropdownWrapper>
             <DropdownBar onClick={toggleDropdown}>
-                {props.data.id}
+                
+                {`${dayOfWeek[mealDate.getDay()]} - ${mealDate.getDate()} ${mealDate.toLocaleString('pl-PL', { month: 'long' })}`}
+                
+                
             </DropdownBar>
             {
                 dropdownOpen &&

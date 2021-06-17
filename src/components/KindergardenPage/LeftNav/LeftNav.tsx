@@ -98,11 +98,6 @@ export const LeftNav: FC = () => {
             })
     }, [])
 
-    // const groups: IKindergardenGroup[] = [
-    //     {name: 'Grupa testowa 1', id: 'testgroup1'},
-    //     {name: 'Grupa testowa 2', id: 'testgroup2'},
-    //     {name: 'Grupa testowa 3', id: 'testgroup3'},
-    // ];
 
     return (
         <NavWrapper>

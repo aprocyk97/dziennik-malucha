@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router';
 import styled from 'styled-components';
 import { useKindergarden } from '../../../../context/KindergardenContext';
-import { SinglePost } from '../../../common/SinglePost';
+import { DummySinglePost } from './DummySinglePost';
 
 const Wrapper = styled.div`
     width: 70%;
@@ -26,13 +26,13 @@ export const GroupsPosts: FC = () => {
             
             <Switch>
                 <Route exact path={`${match?.path}`}>
-                    <SinglePost fullPost={false} setPostPath={setPostPath} />
-                    <SinglePost fullPost={false} setPostPath={setPostPath} />
-                    <SinglePost fullPost={false} setPostPath={setPostPath} />
-                    <SinglePost fullPost={false} setPostPath={setPostPath} />
+                    <DummySinglePost fullPost={false} setPostPath={setPostPath} />
+                    <DummySinglePost fullPost={false} setPostPath={setPostPath} />
+                    <DummySinglePost fullPost={false} setPostPath={setPostPath} />
+                    <DummySinglePost fullPost={false} setPostPath={setPostPath} />
                 </Route>
                 <Route path={`${match?.path}/${postPath}`}>
-                    <SinglePost fullPost={true} setPostPath={setPostPath} />
+                    <DummySinglePost fullPost={true} setPostPath={setPostPath} />
                 </Route>
             </Switch>
         </Wrapper>
