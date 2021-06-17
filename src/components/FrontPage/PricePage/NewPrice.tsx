@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import people from '../../../media/icons/people.png';
 
 const Wrapper = styled.div`
-    border: 1px solid black;
+    border: 1px solid lightyellow;
     background: lightyellow;
+    box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.2);
     font-size: 20px;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -15,7 +16,12 @@ const Wrapper = styled.div`
     width: 250px; 
     float : left;
     margin: 15px;
-
+    //margin: auto;
+    //display: flex;
+    //display: flex;                  
+    //flex-direction: row;            
+    //flex-wrap: nowrap;              
+    //justify-content: space-between;
 `;
 const B = styled.div`
     font-weight: 700;

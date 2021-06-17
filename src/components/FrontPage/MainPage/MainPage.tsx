@@ -20,6 +20,7 @@ interface News {
 const DIV = styled.div`
     border: 1px solid lightblue;
     background: lightblue;
+    box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.2);
     font-size: 16px;
     padding-top: 20px;
     padding-bottom: 20px;
